@@ -15,7 +15,7 @@ public abstract class ConfigLoader {
 	protected File configFile;
 	protected File configFolder;
 	protected final Core basePlugin;
-	private File dataFolder;
+	protected File dataFolder;
 	protected static FileConfiguration config;
 	
 	public ConfigLoader(Core plugin, String fileName) {
