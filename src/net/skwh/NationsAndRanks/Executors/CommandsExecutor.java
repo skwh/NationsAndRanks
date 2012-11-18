@@ -59,6 +59,7 @@ public class CommandsExecutor extends Core {
 				}
 				baseCore.setVerbosity(set);
 			}
+			//chat command to join a nation
 			if (cmd.getName().equalsIgnoreCase("JoinNation") || cmd.getName().equalsIgnoreCase("jn") || cmd.getName().equalsIgnoreCase("join")) {
 				boolean nationExists = baseCore.getNation_NameList().containsKey(args[0]);
 				if (nationExists) {
