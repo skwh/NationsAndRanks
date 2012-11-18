@@ -10,12 +10,12 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 public class Nation {
-	private String name;
+	private final String name;
 	private String short_name;
 	private Borders borders;
 	private Set<Player> citizens = new HashSet<Player>();
+	private Set<Guild> guilds = new HashSet<Guild>();
 	private ChatColor uniqueColor;
-	private Player owner;
 	
 	public void setColor(String s) throws Exception {
 		boolean oops = false;
@@ -56,13 +56,6 @@ public class Nation {
 		return name;
 	}
 	
-	public Player getOwner() {
-		return owner;
-	}
-	public void setOwner(Player p) {
-		owner = p;
-	}
-	
 	public Borders getBorders() {
 		return borders;
 	}
@@ -88,20 +81,26 @@ public class Nation {
 		}
 	}
 	
-	public void refreshCitizens() {
-		for (int i=0;i<citizens.toArray().length;i++) {
-			Player p = (Player) citizens.toArray()[i]; 
-			if (p == this.owner) {
-				p.setDisplayName(uniqueColor + "[" + getName() + "]" + ChatColor.AQUA + p.getName());
-			} else {
-				p.setDisplayName(uniqueColor + "[" + getName() + "]" + ChatColor.BLACK + p.getName());
-			}
+	public Set<Guild> getGuilds() {
+		return guilds;
+	}
+	public void addGuild(Guild g) throws Exception {
+		try {
+			guilds.add(g);
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 	
-	public Nation(String n,Player owner) {
+	public void refreshCitizens() {
+		for (int i=0;i<citizens.toArray().length;i++) {
+			Player p = (Player) citizens.toArray()[i];
+			p.setDisplayName(uniqueColor + "[" + getName() + "]" + ChatColor.BLACK + p.getName());
+		}
+	}
+	
+	public Nation(String n) {
 		name = n;
-		this.owner = owner;
 		uniqueColor = ChatColor.DARK_BLUE;
 	}
 	
