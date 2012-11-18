@@ -76,6 +76,13 @@ public class Core extends JavaPlugin {
 			log("Registered " + l.getClass().getSimpleName() + "' event methods.");
 		}
 	}
+	public Nation findNationByName(String name) throws Exception {
+		if (getBaseCore().getNation_NameList().containsKey(name)) {
+			return getBaseCore().getNation_NameList().get(name);
+		} else {
+			throw new Exception("Nation not found.");
+		}
+	}
 	
 	public void onEnable() {
 		baseCore = this;
