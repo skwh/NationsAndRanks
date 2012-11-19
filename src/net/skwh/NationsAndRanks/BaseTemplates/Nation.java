@@ -3,8 +3,6 @@ package net.skwh.NationsAndRanks.BaseTemplates;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.skwh.NationsAndRanks.Core;
-
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -12,7 +10,6 @@ import org.bukkit.entity.Player;
 public class Nation {
 	private final String name;
 	private String short_name;
-	private Borders borders;
 	private Set<Player> citizens = new HashSet<Player>();
 	private Set<Guild> guilds = new HashSet<Guild>();
 	private ChatColor uniqueColor;
@@ -54,13 +51,6 @@ public class Nation {
 	
 	public String getName() {
 		return name;
-	}
-	
-	public Borders getBorders() {
-		return borders;
-	}
-	public void SetBorders(Set<Block> b) {
-		this.borders = new Borders(this,b);
 	}
 	
 	public void setShortName(String s) {
