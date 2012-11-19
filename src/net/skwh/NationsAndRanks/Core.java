@@ -1,13 +1,17 @@
 package net.skwh.NationsAndRanks;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.skwh.NationsAndRanks.BaseTemplates.Nation;
+import net.skwh.NationsAndRanks.Config.FileHandler;
+import net.skwh.NationsAndRanks.Config.Settings;
 import net.skwh.NationsAndRanks.Executors.CommandsExecutor;
 import net.skwh.NationsAndRanks.Listeners.PlayerChatListener;
 import net.skwh.NationsAndRanks.Listeners.PlayerJoinListener;
+import net.skwh.NationsAndRanks.Utilites.SLAPI;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,6 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Core extends JavaPlugin {
 	public static Core baseCore;
 	private static CommandsExecutor CE = new CommandsExecutor();
+	private static final FileHandler FE = new FileHandler();
 	
 	public static Core getBaseCore() {
 		return baseCore;
@@ -26,6 +31,7 @@ public class Core extends JavaPlugin {
 	
 	private String version = "0.5";
 	private boolean debugging = true;
+	private boolean firstTime = true;
 	
 	public boolean getDebugging() {
 		return debugging;
@@ -46,16 +52,13 @@ public class Core extends JavaPlugin {
 		verbose = b;
 	}
 	
-	private HashMap<String,Nation> Nation_OwnerList = new HashMap<String,Nation>();
-	private HashMap<String,Nation> Nation_NameList = new HashMap<String,Nation>();
-	private HashMap<Player,String> PlayerReferences = new HashMap<Player,String>();
-	private Set<String> NationNames = new HashSet<String>();
+	protected Set<Nation> NationList = new HashSet<Nation>();
+	protected HashMap<String,Nation> Nation_NameList = new HashMap<String,Nation>();
+	protected HashMap<Player,String> PlayerReferences = new HashMap<Player,String>();
+	protected Set<String> NationNames = new HashSet<String>();
 	
 	public HashMap<Player,String> getPlayerReferences() {
 		return PlayerReferences;
-	}
-	public HashMap<String,Nation> getNation_OwnerList() {
-		return Nation_OwnerList;
 	}
 	public HashMap<String,Nation> getNation_NameList() {
 		return Nation_NameList;
@@ -63,13 +66,16 @@ public class Core extends JavaPlugin {
 	public Set<String> getNationNames() {
 		return NationNames;
 	}
+	public Set<Nation> getNationList() {
+		return NationList;
+	}
 	
 	public void log(String text) {
 		if (debugging) {
 			this.getLogger().info(text);
 		}
 	}
-	private void setUpListeners() {
+	private void setUpListeners() { //TODO: add PlayerSpawn listener for kit assignment and PVP only thingy
 		final Listener[] listeners = {new PlayerJoinListener(),new PlayerChatListener()};
 		for (Listener l : listeners) {
 			getServer().getPluginManager().registerEvents(l, this);
@@ -87,10 +93,17 @@ public class Core extends JavaPlugin {
 	public void onEnable() {
 		baseCore = this;
 		setUpListeners();
+		if (!FE.checkExistingFile()) {
+			new Settings(this, "config.yml").load();
+		} else {
+			firstTime = false;
+			FE.assignExistingFile();
+		}
 	}
 	
 	public void onDisable() {
 		this.getLogger().info("Nations and Ranks Disabled, Thanks for using our plugin!");
+		FE.saveCreatedFiles();
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
