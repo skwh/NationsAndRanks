@@ -20,33 +20,7 @@ public class CommandsExecutor extends Core {
 			return true;
 		}
 		Player playah = (Player) sender;
-		if (args.length == 1) {
-			if (cmd.getName().equalsIgnoreCase("SetColor") || cmd.getName().equalsIgnoreCase("sc")) {
-				if (baseCore.getNation_OwnerList() != null) {
-					if (!(baseCore.getNation_OwnerList().containsKey(playah.getDisplayName()))) {
-						sender.sendMessage(ChatColor.RED + "You do not own a nation to change it's color!");
-						return true;
-					}
-				}
-				boolean failed = false;
-				String message = "";
-				Nation n = null;
-				try {
-					n = baseCore.getNation_OwnerList().get(playah.getDisplayName());
-					n.setColor(args[0]);
-				} catch (Exception e) {
-					baseCore.log("There was a problem setting the color of a nation: " + e.getMessage());
-					failed = true;
-					message = e.getMessage();
-				} finally {
-					if (failed) {
-						sender.sendMessage(ChatColor.RED + "Sorry, there was a problem, " + message);
-					} else {
-						n.refreshCitizens();
-						sender.sendMessage(ChatColor.GREEN + "Nation's color succesfully set to " + args[0]);
-					}
-				}
-			}
+		if (args.length == 1) { //TODO: Add listener for JoinGuild
 			if (cmd.getName().equalsIgnoreCase("SetVerbose") || cmd.getName().equalsIgnoreCase("sv")) {
 				boolean set;
 				if (args[0] == "true") {
