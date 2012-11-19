@@ -33,9 +33,8 @@ public class Guild {
 		return ownerNation;
 	}
 	
-	public Guild(String name,Set<Rank> ranks,Nation n) {
+	public Guild(String name,Nation n) {
 		this.name = name;
-		this.ranks = ranks;
 		this.ownerNation = n;
 	}
 }
