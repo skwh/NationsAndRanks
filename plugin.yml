@@ -11,30 +11,24 @@ commands:
     permission: NationsAndRanks.SetRank
     usage: "Usage: /<command> [player] [rank]"
     permission-message: You do not have access to this command!
-  SetBorders:
-    description: Sets the Borders for a Nation.
-    aliases: [sb, SetBorders]
-    permission: NationsAndRanks.SetBorders
-    usage: "Usage: /<command> [borders]"
-    permission-message: You do not have access to this command!
-  SetColor:
-    description: Sets the text color for a Nation. Use color names like blue, yellow, red to set the color.
-    aliases: [sc, SetColor, SetColour]
-    permission: NationsAndRanks.SetColor
-    usage: "Usage: /<command> [color]"
-    permission-message: You do not have access to this command!
   SetVerbose:
     description: Sets the length of descriptors for players.
     aliases: [sv,SetVerbose]
-    permission: NationsAndRanks.SetVerbose;
+    permission: NationsAndRanks.SetVerbose
     usage: "Usage: /<command> [true/false]"
     permission-message: You do not have access to this command!
   JoinNation:
     description: The sender becomes a citizen of the given nation.
     aliases: [jn,join,JoinNation]
-    permission: NationsAndRanks.JoinNation;
+    permission: NationsAndRanks.JoinNation
     usage: "Usage: /<command> [nation]"
-    permission-message: You do not have access to this command! 
+    permission-message: You do not have access to this command!
+  JoinGuild:
+    description: The sender becomes a member of the given guild.
+    aliases: [jg,JoinGuild]
+    permission: NationsAndRanks.JoinGuild
+    usage: "Usage: /<command> [guild]"
+    permission-message: You do not have access to this command!
 permissions:
   NationsAndRanks.*:
     description: Gives access to all Nations and Ranks commands.
@@ -42,25 +36,21 @@ permissions:
     children:
       NationsAndRanks.Info: true
       NationsAndRanks.SetRank: true
-      NationsAndRanks.SetBorders: true
-      NationsAndRanks.SetColor: true
       NationsAndRanks.SetVerbose: true
       NationsAndRanks.JoinNation: true
+      NationsAndRanks.JoinGuild: true
   NationsAndRanks.Info:
     description: Gives access to the nar command.
     default: true
   NationsAndRanks.SetRank:
     description: Gives access to the SetRank command.
     default: true
-  NationsAndRanks.SetBorders:
-    description: Gives access to the SetBorders command.
-    default: true
-  NationsAndRanks.SetColor:
-    description: Gives access to the SetColor command. 
-    default: true
   NationsAndRanks.SetVerbose:
     description: Gives access to the SetVerbose command.
     default: op
   NationsAndRanks.JoinNation:
     description: Gives access to the JoinNation command.
+    default: true
+  NationsAndRanks.JoinGuild:
+    description: Gives access to the JoinGuild command.
     default: true
