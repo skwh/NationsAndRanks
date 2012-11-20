@@ -1,6 +1,6 @@
 -Click a sign/enter chat command:Nation (TEST)
--Nations are unleavable (DEPENDS ON LOADING OF NATIONLIST FROM FILE)
-  ->Settings be stored in files (SEE SLAPI)
+-Nations are unleavable (TEST: SEE BELOW)
+  ->Settings be stored in files (TEST)
 -Click a sign/enter chat command:Guild (NO)
 -Level up with money (NO)
 -Only PVP with people of other nations (NO)
