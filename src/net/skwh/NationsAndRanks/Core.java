@@ -1,23 +1,20 @@
 package net.skwh.NationsAndRanks;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.skwh.NationsAndRanks.BaseTemplates.Nation;
+import net.skwh.NationsAndRanks.BaseTemplates.User;
 import net.skwh.NationsAndRanks.Config.FileHandler;
 import net.skwh.NationsAndRanks.Config.Settings;
 import net.skwh.NationsAndRanks.Executors.CommandsExecutor;
-import net.skwh.NationsAndRanks.Listeners.PlayerChatListener;
 import net.skwh.NationsAndRanks.Listeners.PlayerJoinListener;
-import net.skwh.NationsAndRanks.Utilites.SLAPI;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Core extends JavaPlugin {
@@ -29,9 +26,8 @@ public class Core extends JavaPlugin {
 		return baseCore;
 	}
 	
-	private String version = "0.5";
+	private String version = "0.8";
 	private boolean debugging = true;
-	private boolean firstTime = true;
 	
 	public boolean getDebugging() {
 		return debugging;
@@ -52,13 +48,13 @@ public class Core extends JavaPlugin {
 		verbose = b;
 	}
 	
+	protected Set<User> UserList = new HashSet<User>();
 	protected Set<Nation> NationList = new HashSet<Nation>();
 	protected HashMap<String,Nation> Nation_NameList = new HashMap<String,Nation>();
-	protected HashMap<Player,String> PlayerReferences = new HashMap<Player,String>();
 	protected Set<String> NationNames = new HashSet<String>();
 	
-	public HashMap<Player,String> getPlayerReferences() {
-		return PlayerReferences;
+	public Set<User> getUserList() {
+		return UserList;
 	}
 	public HashMap<String,Nation> getNation_NameList() {
 		return Nation_NameList;
@@ -76,7 +72,7 @@ public class Core extends JavaPlugin {
 		}
 	}
 	private void setUpListeners() { //TODO: add PlayerSpawn listener for kit assignment and PVP only thingy
-		final Listener[] listeners = {new PlayerJoinListener(),new PlayerChatListener()};
+		final Listener[] listeners = {new PlayerJoinListener()};
 		for (Listener l : listeners) {
 			getServer().getPluginManager().registerEvents(l, this);
 			log("Registered " + l.getClass().getSimpleName() + "' event methods.");
@@ -96,7 +92,6 @@ public class Core extends JavaPlugin {
 		if (!FE.checkExistingFile()) {
 			new Settings(this, "config.yml").load();
 		} else {
-			firstTime = false;
 			FE.assignExistingFile();
 		}
 	}
