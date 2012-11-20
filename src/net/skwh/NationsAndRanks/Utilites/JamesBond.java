@@ -1,5 +1,9 @@
 package net.skwh.NationsAndRanks.Utilites;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.entity.Player;
 
 import net.skwh.NationsAndRanks.Core;
@@ -34,5 +38,31 @@ public class JamesBond extends Core {
 			}
 		}
 		return false;
+	}
+	
+	public Set<String> getGuildNames() {
+			Set<String> GuildNames = new HashSet<String>();
+			int NationListSize = getBaseCore().getNationList().size();
+			for (int i=0;i<NationListSize;i++) {
+				Nation cNation = (Nation) getBaseCore().getNationList().toArray()[i];
+				int GuildListSize = cNation.getGuilds().size();
+				for (int j=0;j<GuildListSize;j++) {
+					GuildNames.add(((Guild) cNation.getGuilds().toArray()[i]).getName());
+				}
+			}
+			return GuildNames;
+	}
+	
+	public HashMap<String,Guild> getGuilds() {
+		HashMap<String,Guild> GuildSet = new HashMap<String,Guild>();
+		int NationListSize = getBaseCore().getNationList().size();
+		for (int i=0;i<NationListSize;i++) {
+			Nation cNation = (Nation) getBaseCore().getNationList().toArray()[i];
+			int GuildListSize = cNation.getGuilds().size();
+			for (int j=0;j<GuildListSize;j++) {
+				GuildSet.put(((Nation)cNation.getGuilds().toArray()[i]).getName(), (Guild)cNation.getGuilds().toArray()[i]);
+			}
+		}
+		return GuildSet;
 	}
 }
