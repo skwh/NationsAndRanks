@@ -21,7 +21,7 @@ public class FileHandler extends Core {
 		try {
 			NationList = SLAPI.load(getDataFolder() + File.separator + "NationList.bin");
 			Nation_NameList = SLAPI.load(getDataFolder() + File.separator + "NationNameList.bin");
-			PlayerReferences = SLAPI.load(getDataFolder() + File.separator + "PlayerReferences.bin");
+			UserList = SLAPI.load(getDataFolder() + File.separator + "UserList.bin");
 			NationNames = SLAPI.load(getDataFolder() + File.separator + "NationNames.bin");
 		} catch (Exception e) {
 			getBaseCore().log("Error loading settings files, " + e.getMessage());
@@ -34,7 +34,7 @@ public class FileHandler extends Core {
 		try {
 			SLAPI.save(NationList, getDataFolder() + File.separator + "NationList.bin");
 			SLAPI.save(Nation_NameList, getDataFolder() + File.separator + "NationNameList.bin");
-			SLAPI.save(PlayerReferences, getDataFolder() + File.separator + "PlayerReferences.bin");
+			SLAPI.save(UserList, getDataFolder() + File.separator + "UserList.bin");
 			SLAPI.save(NationNames, getDataFolder() + File.separator + "NationNames.bin");
 		} catch (Exception e) {
 			getBaseCore().log("Error saving settings files, " + e.getMessage());
