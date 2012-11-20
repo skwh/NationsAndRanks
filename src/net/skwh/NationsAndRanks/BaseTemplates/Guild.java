@@ -4,12 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public class Guild {
 	private final String name;
 	private final Nation ownerNation;
 	private ChatColor color;
 	private Set<Rank> ranks = new HashSet<Rank>();
+	private Set<Player> members = new HashSet<Player>();
 	
 	public String getName() {
 		return name;
@@ -18,8 +20,12 @@ public class Guild {
 	public Set<Rank> getRanks() {
 		return ranks;
 	}
-	public void addRank(Rank r) {
-		ranks.add(r);
+	public void addRank(Rank r) throws Exception {
+		try {
+			ranks.add(r);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	public ChatColor getChatColor() {
@@ -31,6 +37,17 @@ public class Guild {
 	
 	public Nation getOwnerNation() {
 		return ownerNation;
+	}
+	
+	public Set<Player> getMembers() {
+		return members;
+	}
+	public void addMember(Player p) throws Exception {
+		try {
+			members.add(p);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	public Guild(String name,Nation n) {
