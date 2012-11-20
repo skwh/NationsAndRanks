@@ -31,6 +31,7 @@ public class Settings extends ConfigLoader {
 		loadKeys();
 	}
 	
+	@SuppressWarnings("unchecked")
 	protected void loadKeys() {
 		List<String> l1 = (List<String>) config.getList("Nations"); //get nations
 		basePlugin.log(l1.toString());
@@ -55,7 +56,11 @@ public class Settings extends ConfigLoader {
 						((Rank) RankList.toArray()[k]).addToKit(new ItemStack((Integer) items.toArray()[x])); //create a new itemstack with that value
 					}
 				}
-				((Guild)GuildList.toArray()[j]).addRank((Rank)RankList.toArray()[j]);
+				try {
+					((Guild)GuildList.toArray()[j]).addRank((Rank)RankList.toArray()[j]);
+				} catch (Exception e) {
+					basePlugin.log("There was a problem adding rank to guilds: " + e.getMessage());
+				}
 			}
 			try {
 				((Nation)NationList.toArray()[i]).addGuild((Guild)GuildList.toArray()[i]);
