@@ -22,7 +22,7 @@ public class Settings extends ConfigLoader {
 		super.saveIfNotExist();
 	}
 
-	public void load() {
+	public void load(){
 		if (!configFile.exists()) {
 			dataFolder.mkdir();
 			basePlugin.saveDefaultConfig();
@@ -34,26 +34,31 @@ public class Settings extends ConfigLoader {
 	@SuppressWarnings("unchecked")
 	protected void loadKeys() {
 		List<String> l1 = (List<String>) config.getList("Nations"); //get nations
-		basePlugin.log(l1.toString());
-		for (int i=0;i<l1.size();i++) { //create each nation object
-			NationList.add(new Nation((String) l1.toArray()[i]));
+		basePlugin.log("Nations Loaded: " + l1.toString());
+		for (int a=0;a<l1.size();a++) { //create each nation object
+			NationList.add(new Nation((String) l1.toArray()[a]));
 		}
 		for (int i=0;i<NationList.size();i++) { //for each nation
 			String CurrentNationName = ((Nation)NationList.toArray()[i]).getName();
 			List<String> l2 = (List<String>) config.getList( CurrentNationName + ".Guilds"); //find the guilds
+			basePlugin.log("Guilds loaded: " + l2.toString() + " for nation " + CurrentNationName);
 			for (int j=0;j<l2.size();j++) { //for each guild
 				GuildList.add(new Guild((String)l2.toArray()[j],(Nation)NationList.toArray()[j])); //create the guild object
 				String CurrentGuildName = ((Guild) GuildList.toArray()[j]).getName();
-				List<String> l3 = (List<String>) config.getList(CurrentNationName + "." + CurrentGuildName + ".Ranks"); //find the ranks
-				for (int k=0;k<l3.size();j++) { //for each rank
-					RankList.add(new Rank((String) l3.toArray()[k],(Guild)GuildList.toArray()[k])); //create the rank object
+				List<String> l3 = (List<String>) config.getList(CurrentNationName + "." + CurrentGuildName + ".Ranks");//find the ranks
+				basePlugin.log("Ranks Loaded: " + l3.toString() + " for guild " + CurrentGuildName + " for nation " + CurrentNationName);
+				for (int k=0;k<l3.size();k++) { //for each rank
+					RankList.add(new Rank((String) l3.toArray()[k]/*Name of the rank*/,(Guild) GuildList.toArray()[j] /*Parent Guild*/)); //create the rank object
 					String CurrentRankName = ((Rank) RankList.toArray()[k]).getName();
-					
+					basePlugin.log(CurrentRankName);
 					int price = config.getInt(CurrentNationName + "." + CurrentGuildName + "." + CurrentRankName + ".Price");
 					List<Integer> items = (List<Integer>) config.getList(CurrentNationName + "." + CurrentGuildName + "." + CurrentRankName + ".Items");
 					((Rank) RankList.toArray()[k]).setPayRequired(price);
-					for (int x=0;x<items.size();x++) { //for each item
-						((Rank) RankList.toArray()[k]).addToKit(new ItemStack((Integer) items.toArray()[x])); //create a new itemstack with that value
+					try {
+						basePlugin.log("Specifics loaded: price: " + price + ", items: " + items.toString());
+						
+					} catch (NullPointerException e) {
+						basePlugin.log("NullPointerException with items (" + (items == null) + ")");
 					}
 				}
 				try {
