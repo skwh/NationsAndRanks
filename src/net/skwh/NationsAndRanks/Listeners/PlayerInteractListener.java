@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class PlayerInteractListener extends Core implements Listener {
 	private final static JamesBond DoubleOhSeven = new JamesBond();
 	public void onPlayerInteract(PlayerInteractEvent e) {
+		getBaseCore().log("PlayerInteractListener fired!");
 		if (e.hasBlock()) {
 			Block b = e.getClickedBlock();
 			if (b.getType() == Material.SIGN) {
