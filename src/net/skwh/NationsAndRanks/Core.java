@@ -9,6 +9,7 @@ import net.skwh.NationsAndRanks.BaseTemplates.User;
 import net.skwh.NationsAndRanks.Config.FileHandler;
 import net.skwh.NationsAndRanks.Config.Settings;
 import net.skwh.NationsAndRanks.Executors.CommandsExecutor;
+import net.skwh.NationsAndRanks.Listeners.PlayerInteractListener;
 import net.skwh.NationsAndRanks.Listeners.PlayerJoinListener;
 
 import org.bukkit.command.Command;
@@ -72,10 +73,10 @@ public class Core extends JavaPlugin {
 		}
 	}
 	private void setUpListeners() { //TODO: add PlayerSpawn listener for kit assignment and PVP only thingy
-		final Listener[] listeners = {new PlayerJoinListener()};
+		final Listener[] listeners = {new PlayerJoinListener(), new PlayerInteractListener()};
 		for (Listener l : listeners) {
 			getServer().getPluginManager().registerEvents(l, this);
-			log("Registered " + l.getClass().getSimpleName() + "' event methods.");
+			log("Registered " + l.getClass().getSimpleName() + "'s event methods.");
 		}
 	}
 	public Nation findNationByName(String name) throws Exception {
@@ -88,6 +89,7 @@ public class Core extends JavaPlugin {
 	
 	public void onEnable() {
 		baseCore = this;
+		baseCore.log(getDataFolder().getPath());
 		setUpListeners();
 		if (!FE.checkExistingFile()) {
 			new Settings(this, "config.yml").load();
@@ -97,8 +99,8 @@ public class Core extends JavaPlugin {
 	}
 	
 	public void onDisable() {
-		this.getLogger().info("Nations and Ranks Disabled, Thanks for using our plugin!");
 		FE.saveCreatedFiles();
+		this.getLogger().info("Nations and Ranks Disabled, Thanks for using our plugin!");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
