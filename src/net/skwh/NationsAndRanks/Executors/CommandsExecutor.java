@@ -38,10 +38,11 @@ public class CommandsExecutor extends Core {
 			}
 			//chat command to join a nation
 			if (cmd.getName().equalsIgnoreCase("JoinNation") || cmd.getName().equalsIgnoreCase("jn")) {
+				String formattedArgs = args[0].toLowerCase();
 				if (!DoubleOhSeven.doesPlayerBelongToCountry(playah)) {
-					boolean nationExists = baseCore.getNation_NameList().containsKey(args[0]);
+					boolean nationExists = baseCore.getNation_NameList().containsKey(formattedArgs);
 					if (nationExists) {
-						Nation n = getBaseCore().getNation_NameList().get(args[0]);
+						Nation n = getBaseCore().getNation_NameList().get(formattedArgs);
 						boolean failure = false;
 						try {
 							n.addCitizen(playah);
@@ -50,9 +51,9 @@ public class CommandsExecutor extends Core {
 							getBaseCore().log("Error adding player to nation: " + e.getMessage());
 						} finally {
 							if (failure) {
-								playah.sendMessage(ChatColor.RED + "Sorry, there was a problem adding you to " + args[0] + ".");
+								playah.sendMessage(ChatColor.RED + "Sorry, there was a problem adding you to " + formattedArgs + ".");
 							} else {
-								playah.sendMessage(ChatColor.GREEN + "Congradulations, Welcome to " + args[0] + ", " + playah.getDisplayName());
+								playah.sendMessage(ChatColor.GREEN + "Congradulations, Welcome to " + formattedArgs + ", " + playah.getDisplayName());
 								n.refreshCitizens();
 							}
 						}
