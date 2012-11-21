@@ -31,8 +31,12 @@ public class Rank {
 	public void setKit(Inventory kit) {
 		this.kit = kit;
 	}
-	public void addToKit(ItemStack Items) {
-		kit.addItem(Items);
+	public void addToKit(ItemStack Items) throws Exception {
+		try {
+			kit.addItem(Items);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	public String getName() {
