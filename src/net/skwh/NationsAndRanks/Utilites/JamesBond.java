@@ -60,7 +60,8 @@ public class JamesBond extends Core {
 			Nation cNation = (Nation) getBaseCore().getNationList().toArray()[i];
 			int GuildListSize = cNation.getGuilds().size();
 			for (int j=0;j<GuildListSize;j++) {
-				GuildSet.put(((Nation)cNation.getGuilds().toArray()[i]).getName(), (Guild)cNation.getGuilds().toArray()[i]);
+				Guild CurrentGuild = (Guild) cNation.getGuilds().toArray()[i];
+				GuildSet.put(CurrentGuild.getName(),CurrentGuild);
 			}
 		}
 		return GuildSet;
