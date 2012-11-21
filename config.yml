@@ -1,5 +1,5 @@
-Nations: [Dwarves,Humans]
-Dwarves:
+Nations: [Dwarf,Human]
+Dwarf:
   Guilds: [Miner,Warrior]
   Miner:
     Ranks: [Junior Miner,Senior Miner,Master Miner]
@@ -23,7 +23,7 @@ Dwarves:
     Master Warrior:
       Price: 300
       Items: [12,13,14,15]
-Humans:
+Human:
   Guilds: [Miner,Warrior]
   Miner:
     Ranks: [Junior Miner,Senior Miner,Master Miner]
