@@ -1,6 +1,7 @@
 package net.skwh.NationsAndRanks.Executors;
 
 import net.skwh.NationsAndRanks.Core;
+import net.skwh.NationsAndRanks.BaseTemplates.Guild;
 import net.skwh.NationsAndRanks.BaseTemplates.Nation;
 import net.skwh.NationsAndRanks.Utilites.JamesBond;
 
@@ -36,7 +37,7 @@ public class CommandsExecutor extends Core {
 				getBaseCore().setVerbosity(set);
 			}
 			//chat command to join a nation
-			if (cmd.getName().equalsIgnoreCase("JoinNation") || cmd.getName().equalsIgnoreCase("jn") || cmd.getName().equalsIgnoreCase("join")) {
+			if (cmd.getName().equalsIgnoreCase("JoinNation") || cmd.getName().equalsIgnoreCase("jn")) {
 				if (!DoubleOhSeven.doesPlayerBelongToCountry(playah)) {
 					boolean nationExists = baseCore.getNation_NameList().containsKey(args[0]);
 					if (nationExists) {
@@ -55,6 +56,8 @@ public class CommandsExecutor extends Core {
 								n.refreshCitizens();
 							}
 						}
+					} else {
+						playah.sendMessage("That nation does not exist!");
 					}
 				} else {
 					playah.sendMessage("You are already a citizen of a nation!");
@@ -63,19 +66,23 @@ public class CommandsExecutor extends Core {
 			if (cmd.getName().equalsIgnoreCase("JoinGuild") || cmd.getName().equalsIgnoreCase("jg")) {
 				if (DoubleOhSeven.doesPlayerBelongToCountry(playah)) {
 					if (!DoubleOhSeven.doesPlayerBelongToGuild(playah)) {
-						boolean failed = false;
-						try {
-							Nation n = getBaseCore().findNationByName(args[0]);
-							n.addCitizen(playah);
-						} catch (Exception e) {
-							failed = true;
-							getBaseCore().log("There was a problem adding player " + playah.getDisplayName() + " to a guild: " + e.getMessage());
-						} finally {
-							if (failed) {
-								playah.sendMessage(ChatColor.RED + "Sorry, there was a problem adding you to this nation.");
-							} else {
-								playah.sendMessage(ChatColor.GREEN + "Welcome to this nation," + playah.getDisplayName() + "!");
+						if (DoubleOhSeven.getGuilds().containsKey(args[0])) {
+							boolean failed = false;
+							try {
+								Guild g = DoubleOhSeven.getGuilds().get(args[0]);
+								g.addMember(playah);
+							} catch (Exception e) {
+								failed = true;
+								getBaseCore().log("There was a problem adding player " + playah.getDisplayName() + " to a guild: " + e.getMessage());
+							} finally {
+								if (failed) {
+									playah.sendMessage(ChatColor.RED + "Sorry, there was a problem adding you to this guild.");
+								} else {
+									playah.sendMessage(ChatColor.GREEN + "Welcome to this guild," + playah.getDisplayName() + "!");
+								}
 							}
+						} else {
+							playah.sendMessage("No guild with that name exists!");
 						}
 					} else {
 						playah.sendMessage("You are already in a guild!");
