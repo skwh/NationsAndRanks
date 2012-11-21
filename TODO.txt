@@ -1,7 +1,7 @@
 -Click a sign/enter chat command:Nation (TEST)
 -Nations are unleavable (TEST: SEE BELOW)
   ->Settings be stored in files (TEST)
--Click a sign/enter chat command:Guild (NO)
+-Click a sign/enter chat command:Guild (TEST)
 -Level up with money (NO)
 -Only PVP with people of other nations (NO)
 -Spawn with kit (NO)
