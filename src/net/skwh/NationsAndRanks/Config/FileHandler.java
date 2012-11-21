@@ -6,23 +6,17 @@ import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.Utilites.SLAPI;
 
 public class FileHandler extends Core {
+	private File fNationList, fNationNameList, fUserList, fNationNames;
 	public boolean checkExistingFile() { //returns true if a file with nations exists
-		boolean failed = false;
-		try {
-			SLAPI.load(getDataFolder() + File.separator + "NationList.bin");
-		} catch (Exception e) {
-			getBaseCore().log("There was a problem loading the settings: "+ e.getMessage());
-			failed = true;
-		}
-		return failed;
+		return fNationList.exists();
 	}
 	public void assignExistingFile() {
 		getBaseCore().log("Settings files detected, loading those...");
 		try {
-			NationList = SLAPI.load(getDataFolder() + File.separator + "NationList.bin");
-			Nation_NameList = SLAPI.load(getDataFolder() + File.separator + "NationNameList.bin");
-			UserList = SLAPI.load(getDataFolder() + File.separator + "UserList.bin");
-			NationNames = SLAPI.load(getDataFolder() + File.separator + "NationNames.bin");
+			NationList = SLAPI.load(fNationList.getPath());
+			Nation_NameList = SLAPI.load(fNationNameList.getPath());
+			UserList = SLAPI.load(fUserList.getPath());
+			NationNames = SLAPI.load(fNationNames.getPath());
 		} catch (Exception e) {
 			getBaseCore().log("Error loading settings files, " + e.getMessage());
 		} finally {
@@ -32,14 +26,20 @@ public class FileHandler extends Core {
 	public void saveCreatedFiles() {
 		getBaseCore().log("Saving files... ");
 		try {
-			SLAPI.save(NationList, getDataFolder() + File.separator + "NationList.bin");
-			SLAPI.save(Nation_NameList, getDataFolder() + File.separator + "NationNameList.bin");
-			SLAPI.save(UserList, getDataFolder() + File.separator + "UserList.bin");
-			SLAPI.save(NationNames, getDataFolder() + File.separator + "NationNames.bin");
+			SLAPI.save(NationList, fNationList.getPath());
+			SLAPI.save(Nation_NameList, fNationNameList.getPath());
+			SLAPI.save(UserList, fUserList.getPath());
+			SLAPI.save(NationNames, fNationNames.getPath());
 		} catch (Exception e) {
 			getBaseCore().log("Error saving settings files, " + e.getMessage());
 		} finally {
 			getBaseCore().log("Finished saving settings files.");
 		}
+	}
+	public FileHandler() {
+		fNationList = new File(getDataFolder() + File.separator + "NationList.bin");
+		fNationNameList = new File(getDataFolder() + File.separator + "NationNameList.bin");
+		fNationNames = new File(getDataFolder() + File.separator + "NationNames.bin");
+		fUserList = new File(getDataFolder() + File.separator + "UserList.bin");
 	}
 }
