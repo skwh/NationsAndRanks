@@ -1,6 +1,6 @@
 name: NationsAndRanks
 main: net.skwh.NationsAndRanks.Core
-version: 0.5
+version: 0.8
 commands:
   NAR:
     description: Offers information about the plugin.
