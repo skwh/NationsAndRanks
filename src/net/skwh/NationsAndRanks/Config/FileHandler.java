@@ -37,9 +37,9 @@ public class FileHandler extends Core {
 		}
 	}
 	public FileHandler() {
-		fNationList = new File(getDataFolder() + File.separator + "NationList.bin");
-		fNationNameList = new File(getDataFolder() + File.separator + "NationNameList.bin");
-		fNationNames = new File(getDataFolder() + File.separator + "NationNames.bin");
-		fUserList = new File(getDataFolder() + File.separator + "UserList.bin");
+		fNationList = new File(getBaseCore().getDataFolder().getPath() + "\\NationList.bin");
+		fNationNameList = new File(getBaseCore().getDataFolder().getPath() + "\\NationNameList.bin");
+		fNationNames = new File(getBaseCore().getDataFolder().getPath() + "\\NationNames.bin");
+		fUserList = new File(getBaseCore().getDataFolder().getPath() + "\\UserList.bin");
 	}
 }
