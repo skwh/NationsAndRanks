@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import net.skwh.NationsAndRanks.Core;
+
 import org.bukkit.Achievement;
 import org.bukkit.Effect;
 import org.bukkit.EntityEffect;
@@ -48,6 +50,26 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public class User implements Player {
+	public static void addToUserList(Core basePlugin, User u) {
+		basePlugin.getUserList().put(u.p, u);
+	}
+	public static User makeUserWithAttributes(Player p,Nation n, Guild g, Rank r) {
+		if (p == null) {
+			return null;
+		}
+		User u = new User(p);
+		if (n != null) {
+			u.setNation(true, n);
+			if (g != null) {
+				u.setGuild(true, g);
+				if (r != null) {
+					u.setCurrentRank(r);
+				}
+			}
+		}
+		return u;
+	}
+	
 	private Player p;
 	private boolean belongsToNation = false;
 	private Nation ownerNation = null;
@@ -64,7 +86,7 @@ public class User implements Player {
 		currentRank = r;
 	}
 	
-	public boolean getBooleanNation() {
+	public boolean doesBelongToNation() {
 		return belongsToNation;
 	}
 	public Nation getNation() {
@@ -75,7 +97,7 @@ public class User implements Player {
 		ownerNation = n;
 	}
 	
-	public boolean getBooleanGuild() {
+	public boolean doesBelongToGuild() {
 		return belongsToGuild;
 	}
 	public Guild getGuild() {
@@ -94,100 +116,78 @@ public class User implements Player {
 		this.p = p;
 	}
 	
-	@Override
 	public void closeInventory() {
-		// TODO Auto-generated method stub
+		p.closeInventory();
 		
 	}
-	@Override
 	public Inventory getEnderChest() {
-		// TODO Auto-generated method stub
-		return null;
+		return p.getEnderChest();
 	}
-	@Override
 	public int getExpToLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return p.getExpToLevel();
 	}
-	@Override
 	public GameMode getGameMode() {
-		// TODO Auto-generated method stub
-		return null;
+		return p.getGameMode();
 	}
-	@Override
+	
 	public PlayerInventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return p.getInventory();
 	}
-	@Override
+	
 	public ItemStack getItemInHand() {
-		// TODO Auto-generated method stub
-		return null;
+		return p.getItemInHand();
 	}
-	@Override
+	
 	public ItemStack getItemOnCursor() {
-		// TODO Auto-generated method stub
-		return null;
+		return p.getItemOnCursor();
 	}
-	@Override
+	
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return p.getName();
 	}
-	@Override
+	
 	public InventoryView getOpenInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return p.getOpenInventory();
 	}
-	@Override
+	
 	public int getSleepTicks() {
-		// TODO Auto-generated method stub
-		return 0;
+		return p.getSleepTicks();
 	}
-	@Override
+	
 	public boolean isBlocking() {
-		// TODO Auto-generated method stub
-		return false;
+		return p.isBlocking();
 	}
-	@Override
+	
 	public boolean isSleeping() {
-		// TODO Auto-generated method stub
-		return false;
+		return p.isSleeping();
 	}
-	@Override
+	
 	public InventoryView openEnchanting(Location arg0, boolean arg1) {
-		// TODO Auto-generated method stub
-		return null;
+		return p.openEnchanting(arg0, arg1);
 	}
-	@Override
+	
 	public InventoryView openInventory(Inventory arg0) {
-		// TODO Auto-generated method stub
-		return null;
+		return p.openInventory(arg0);
 	}
-	@Override
+	
 	public void openInventory(InventoryView arg0) {
-		// TODO Auto-generated method stub
-		
+		p.openInventory(arg0);
 	}
-	@Override
+	
 	public InventoryView openWorkbench(Location arg0, boolean arg1) {
-		// TODO Auto-generated method stub
-		return null;
+		return p.openWorkbench(arg0,arg1);
 	}
-	@Override
+	
 	public void setGameMode(GameMode arg0) {
-		// TODO Auto-generated method stub
-		
+		p.setGameMode(arg0);
 	}
-	@Override
+	
 	public void setItemInHand(ItemStack arg0) {
-		// TODO Auto-generated method stub
-		
+		p.setItemInHand(arg0);
 	}
-	@Override
+	
 	public void setItemOnCursor(ItemStack arg0) {
-		// TODO Auto-generated method stub
-		
+		p.setItemOnCursor(arg0);
 	}
 	@Override
 	public boolean setWindowProperty(Property arg0, int arg1) {
