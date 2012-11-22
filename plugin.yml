@@ -34,12 +34,6 @@ commands:
     permission: NationsAndRanks.List
     usage: "Usage: /<command> [ranks/guilds/nations]"
     permission-message: You do not have access to this command!
-  GetKit:
-    description: Gives the sender the applicable kit for what guild they are in.
-    aliases: [gk,GetKit]
-    permission: NationsAndRanks.GetKit
-    usage: "Usage: /<command>"
-    permission-message:You do not have access to this command!
 permissions:
   NationsAndRanks.*:
     description: Gives access to all Nations and Ranks commands.
@@ -51,7 +45,6 @@ permissions:
       NationsAndRanks.JoinNation: true
       NationsAndRanks.JoinGuild: true
       NationsAndRanks.List: true
-      NationsAndRanks.GetKit: true
   NationsAndRanks.Info:
     description: Gives access to the nar command.
     default: true
@@ -69,7 +62,4 @@ permissions:
     default: true
   NationsAndRanks.List:
     description: Gives access to the List command.
-    default: true
-  NationsAndRanks.GetKit:
-    description: Gives access to the GetKit command.
     default: true
