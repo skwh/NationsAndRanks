@@ -49,12 +49,12 @@ public class Core extends JavaPlugin {
 		verbose = b;
 	}
 	
-	protected Set<User> UserList = new HashSet<User>();
+	protected HashMap<Player,User> UserList = new HashMap<Player,User>();
 	protected Set<Nation> NationList = new HashSet<Nation>();
 	protected HashMap<String,Nation> Nation_NameList = new HashMap<String,Nation>();
 	protected Set<String> NationNames = new HashSet<String>();
 	
-	public Set<User> getUserList() {
+	public HashMap<Player,User> getUserList() {
 		return UserList;
 	}
 	public HashMap<String,Nation> getNation_NameList() {
