@@ -84,6 +84,7 @@ public class User implements Player {
 	}
 	public void setCurrentRank(Rank r) {
 		currentRank = r;
+		ownerGuild.setPlayerToRank(this.p,r);
 	}
 	
 	public boolean doesBelongToNation() {
