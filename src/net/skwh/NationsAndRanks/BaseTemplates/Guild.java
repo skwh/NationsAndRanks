@@ -1,5 +1,6 @@
 package net.skwh.NationsAndRanks.BaseTemplates;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ public class Guild {
 	private ChatColor color;
 	private Set<Rank> ranks = new HashSet<Rank>();
 	private Set<Player> members = new HashSet<Player>();
+	private HashMap<Player, Rank> playerRankList = new HashMap<Player,Rank>();
 	
 	public String getName() {
 		return name;
@@ -25,6 +27,24 @@ public class Guild {
 			ranks.add(r);
 		} catch (Exception e) {
 			throw e;
+		}
+	}
+	
+	public HashMap<Player, Rank> getPlayerRankList() {
+		return playerRankList;
+	}
+	public void setPlayerToRank(Player p, Rank r) {
+		if (playerRankList.containsKey(p)) {
+			playerRankList.remove(p);
+		}
+		playerRankList.put(p, r);
+	}
+	
+	public Rank getRankForPlayer(Player p) throws Exception {
+		if (playerRankList.containsKey(p)) {
+			return playerRankList.get(p);
+		} else {
+			throw new Exception("The specified player is not in the ranklist.");
 		}
 	}
 	
