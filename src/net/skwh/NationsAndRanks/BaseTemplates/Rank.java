@@ -1,5 +1,7 @@
 package net.skwh.NationsAndRanks.BaseTemplates;
 
+import java.util.Set;
+
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -8,7 +10,7 @@ public class Rank {
 	public final Guild ownerGuild;
 	private Rank up;
 	private Rank down;
-	private Inventory kit;
+	private Set<ItemStack> kit;
 	private int payRequired;
 	
 	public Rank getUp() {
@@ -25,15 +27,15 @@ public class Rank {
 		payRequired = i;
 	}
 	
-	public Inventory getKit() {
+	public Set<ItemStack> getKit() {
 		return kit;
 	}
-	public void setKit(Inventory kit) {
+	public void setKit(Set<ItemStack> kit) {
 		this.kit = kit;
 	}
 	public void addToKit(ItemStack Items) throws Exception {
 		try {
-			kit.addItem(Items);
+			kit.add(Items);
 		} catch (Exception e) {
 			throw e;
 		}
