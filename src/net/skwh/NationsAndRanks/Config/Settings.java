@@ -58,7 +58,7 @@ public class Settings extends ConfigLoader {
 						basePlugin.log("Specifics loaded: price: " + price + ", items: " + items.toString());
 						
 					} catch (NullPointerException e) {
-						basePlugin.log("NullPointerException with items (" + (items == null) + ")");
+						basePlugin.log("NullPointerException with items in " + CurrentRankName);
 					}
 				}
 				try {
