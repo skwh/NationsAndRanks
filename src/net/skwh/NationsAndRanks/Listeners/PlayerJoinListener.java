@@ -5,6 +5,7 @@ import java.util.Set;
 
 import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.BaseTemplates.Nation;
+import net.skwh.NationsAndRanks.BaseTemplates.User;
 import net.skwh.NationsAndRanks.Utilites.JamesBond;
 
 import org.bukkit.entity.Player;
@@ -15,12 +16,18 @@ import org.bukkit.inventory.ItemStack;
 
 public class PlayerJoinListener extends Core implements Listener {
 	private static final JamesBond DoubleOhSeven = new JamesBond();
+	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
-		getBaseCore().log("Player joined!");
+		getBaseCore().log("Player " + e.getPlayer().getDisplayName() + " joined!");
 		Player p = e.getPlayer();
 		if (DoubleOhSeven.doesPlayerBelongToCountry(p)) {
 			DoubleOhSeven.getNationForPlayer(p).refreshCitizens();
+		}
+		
+		if (!DoubleOhSeven.isPlayerInUserList(p)) {
+			User u = new User(p);
+			getBaseCore().getUserList().put(p, u);
 		}
 		
 		if (DoubleOhSeven.doesPlayerBelongToGuild(p)) {
