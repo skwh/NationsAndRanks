@@ -14,11 +14,9 @@ import net.skwh.NationsAndRanks.BaseTemplates.User;
 public class JamesBond extends Core {
 	public boolean doesPlayerBelongToCountry(Player p) {
 		if (!isPlayerInUserList(p)) {
-			int NationListSize = getBaseCore().getNationList().size();
-			for (int i=0;i<NationListSize;i++) {
-				Nation n = (Nation) getBaseCore().getNationList().toArray()[i];
-				for (int j=0;j<n.getCitizens().size();j++) {
-					if (p == n.getCitizens().toArray()[j]) {
+			for (Nation n : getBaseCore().getNationList()) {
+				for (Player pl : n.getCitizens()) {
+					if (p == pl) {
 						return true;
 					}
 				}
@@ -32,13 +30,10 @@ public class JamesBond extends Core {
 	
 	public boolean doesPlayerBelongToGuild(Player p) {
 			if (!isPlayerInUserList(p)) {
-			int NationListSize = getBaseCore().getNationList().size();
-			for (int i=0;i<NationListSize;i++) {
-				Nation n = (Nation) getBaseCore().getNationList().toArray()[i];
-				for (int j=0;j<n.getGuilds().size();j++) {
-					Guild g = (Guild) n.getGuilds().toArray()[j];
-					for (int k=0;k<g.getMembers().size();k++) {
-						if (p == g.getMembers().toArray()[k]) {
+			for (Nation n : getBaseCore().getNationList()) {
+				for (Guild g : n.getGuilds()) {
+					for (Player pl : g.getMembers()) {
+						if (p == pl) {
 							return true;
 						}
 					}
@@ -53,12 +48,9 @@ public class JamesBond extends Core {
 	
 	public Set<String> getGuildNames() {
 			Set<String> GuildNames = new HashSet<String>();
-			int NationListSize = getBaseCore().getNationList().size();
-			for (int i=0;i<NationListSize;i++) {
-				Nation cNation = (Nation) getBaseCore().getNationList().toArray()[i];
-				int GuildListSize = cNation.getGuilds().size();
-				for (int j=0;j<GuildListSize;j++) {
-					GuildNames.add(((Guild) cNation.getGuilds().toArray()[i]).getName());
+			for (Nation n : getBaseCore().getNationList()) {
+				for (Guild g : n.getGuilds()) {
+					GuildNames.add(g.getName());
 				}
 			}
 			return GuildNames;
@@ -66,13 +58,9 @@ public class JamesBond extends Core {
 	
 	public HashMap<String,Guild> getGuilds() {
 		HashMap<String,Guild> GuildSet = new HashMap<String,Guild>();
-		int NationListSize = getBaseCore().getNationList().size();
-		for (int i=0;i<NationListSize;i++) {
-			Nation cNation = (Nation) getBaseCore().getNationList().toArray()[i];
-			int GuildListSize = cNation.getGuilds().size();
-			for (int j=0;j<GuildListSize;j++) {
-				Guild CurrentGuild = (Guild) cNation.getGuilds().toArray()[j];
-				GuildSet.put(CurrentGuild.getName(),CurrentGuild);
+		for (Nation n : getBaseCore().getNationList()) {
+			for (Guild g : n.getGuilds()) {
+				GuildSet.put(g.getName(),g);
 			}
 		}
 		return GuildSet;
@@ -84,10 +72,10 @@ public class JamesBond extends Core {
 		} else {
 			HashMap<String,Guild> hashGuilds = getGuilds();
 			Set<String> GuildNames = getGuildNames();
-			for (int i=0;i<GuildNames.size();i++) {
-				Guild currentGuild = hashGuilds.get(GuildNames.toArray()[i]);
-				for (int a=0;a<currentGuild.getMembers().size();a++) {
-					if ((Player)currentGuild.getMembers().toArray()[a] == p) {
+			for (String st : GuildNames) {
+				Guild currentGuild = hashGuilds.get(st);
+				for (Player pl : currentGuild.getMembers()) {
+					if (p == pl) {
 						return currentGuild;
 					}
 				}
@@ -102,10 +90,10 @@ public class JamesBond extends Core {
 		} else {
 			HashMap<String,Nation> hashNations = getBaseCore().getNation_NameList();
 			Set<String> NationNames = getBaseCore().getNationNames();
-			for (int i=0;i<NationNames.size();i++) {
-				Nation currentNation = hashNations.get(NationNames.toArray()[i]);
-				for (int a=0;a<currentNation.getCitizens().size();a++) {
-					if ((Player) currentNation.getCitizens().toArray()[a] == p) {
+			for (String st : NationNames) {
+				Nation currentNation = hashNations.get(st);
+				for (Player pl : currentNation.getCitizens()) {
+					if (p == pl) {
 						return currentNation;
 					}
 				}
