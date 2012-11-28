@@ -32,11 +32,11 @@ public class Settings extends ConfigLoader {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected void loadKeys() {
+	protected void loadKeys() { //TODO: Change the FRICKING FOR LOOPS
 		List<String> l1 = (List<String>) config.getList("Nations"); //get nations
 		basePlugin.log("Nations Loaded: " + l1.toString());
-		for (int a=0;a<l1.size();a++) { //create each nation object
-			NationList.add(new Nation((String) l1.toArray()[a]));
+		for (String st : l1) { //create each nation object
+			NationList.add(new Nation(st));
 		}
 		for (int i=0;i<NationList.size();i++) { //for each nation
 			String CurrentNationName = ((Nation)NationList.toArray()[i]).getName();
