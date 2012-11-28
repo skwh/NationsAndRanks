@@ -84,7 +84,7 @@ public class Nation {
 	public void refreshCitizens() {
 		for (int i=0;i<citizens.toArray().length;i++) {
 			Player p = (Player) citizens.toArray()[i];
-			p.setDisplayName(uniqueColor + "[" + getName() + "]" + ChatColor.GOLD + p.getName());
+			p.setDisplayName(uniqueColor + "[" + getName() + "] " + ChatColor.GOLD + p.getName() + ChatColor.WHITE);
 		}
 	}
 	
