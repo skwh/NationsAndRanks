@@ -20,15 +20,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Core extends JavaPlugin {
 	public static Core baseCore;
-	private static CommandsExecutor CE = new CommandsExecutor();
-	private static final FileHandler FE = new FileHandler();
 	
 	public static Core getBaseCore() {
 		return baseCore;
 	}
 	
+	private static CommandsExecutor CE = new CommandsExecutor();
+	private static final FileHandler FE = new FileHandler();
+	
 	private String version = "0.8";
 	private boolean debugging = true;
+	private boolean firstTime = false;
 	
 	public boolean getDebugging() {
 		return debugging;
@@ -93,12 +95,16 @@ public class Core extends JavaPlugin {
 		setUpListeners();
 		if (!FE.checkExistingFile()) {
 			new Settings(this, "config.yml").load();
+			firstTime = true;
 		} else {
 			FE.assignExistingFile();
 		}
 	}
 	
 	public void onDisable() {
+		if (firstTime) {
+			FE.createNewFiles();
+		}
 		FE.saveCreatedFiles();
 		this.getLogger().info("Nations and Ranks Disabled, Thanks for using our plugin!");
 	}
