@@ -4,5 +4,5 @@
 -enter chat command:Guild (YES)
 -Level up with money (NO)
 -Only PVP with people of other nations (NO)
--Spawn with kit (NO)
+-Spawn with kit (TEST)
 -Nations and Classes with yaml file (IMPROVE)
