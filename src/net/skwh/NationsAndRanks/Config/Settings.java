@@ -38,7 +38,7 @@ public class Settings extends ConfigLoader {
 		for (String st : l1) { //create each nation object
 			NationList.add(new Nation(st));
 		}
-		for (int i=0;i<NationList.size();i++) { //for each nation
+		/*for (int i=0;i<NationList.size();i++) { //for each nation
 			String CurrentNationName = ((Nation)NationList.toArray()[i]).getName();
 			List<String> l2 = (List<String>) config.getList( CurrentNationName + ".Guilds"); //find the guilds
 			basePlugin.log("Guilds loaded: " + l2.toString() + " for nation " + CurrentNationName);
@@ -48,7 +48,7 @@ public class Settings extends ConfigLoader {
 				List<String> l3 = (List<String>) config.getList(CurrentNationName + "." + CurrentGuildName + ".Ranks");//find the ranks
 				basePlugin.log("Ranks Loaded: " + l3.toString() + " for guild " + CurrentGuildName + " for nation " + CurrentNationName);
 				for (int k=0;k<l3.size();k++) { //for each rank
-					RankList.add(new Rank((String) l3.toArray()[k]/*Name of the rank*/,(Guild) GuildList.toArray()[j] /*Parent Guild*/)); //create the rank object
+					RankList.add(new Rank((String) l3.toArray()[k],(Guild) GuildList.toArray()[j])); //create the rank object
 					String CurrentRankName = ((Rank) RankList.toArray()[k]).getName();
 					basePlugin.log(CurrentRankName);
 					int price = config.getInt(CurrentNationName + "." + CurrentGuildName + "." + CurrentRankName + ".Price");
@@ -71,6 +71,38 @@ public class Settings extends ConfigLoader {
 				((Nation)NationList.toArray()[i]).addGuild((Guild)GuildList.toArray()[i]);
 			} catch (Exception e) {
 				basePlugin.log("There was a problem setting guilds: " + e.getMessage());
+			}
+		} */
+		for (Nation n : NationList) {
+			List<String> l2 = (List<String>) config.getList(n.getName() + ".Guilds");
+			for (String st : l2) {
+				Guild currentGuild = new Guild(st,n);
+				try {
+					n.addGuild(currentGuild);
+				} catch (Exception e) {
+					basePlugin.log("There was an error adding guild " + currentGuild.getName() + " to nation " + n.getName() + ": " + e.getMessage());
+				}
+			}
+		}
+		for (Guild g : GuildList) {
+			List<String> l3 = (List<String>) config.getList(g.getOwnerNation().getName() + "." + g.getName() + ".Ranks");
+			for (String st : l3) {
+				Rank currentRank = new Rank(st,g);
+				try {
+					g.addRank(currentRank);
+				} catch (Exception e) {
+					basePlugin.log("There was an error adding rank " + currentRank.getName() + " to guild " + g.getName() + ":" + e.getMessage());
+				}
+			}
+		}
+		for (Rank r: RankList) {
+			int price = (int) config.getInt(r.getOwnerGuild().getOwnerNation().getName() + "." + r.getOwnerGuild().getName() + "." + r.getName() + ".Price");
+			List<Integer> items = (List<Integer>) config.getIntegerList(r.getOwnerGuild().getOwnerNation().getName() + "." + r.getOwnerGuild().getName() + "." + r.getName() + ".Items");
+			
+			try {
+				r.setPayRequired(price);
+			} catch (Exception e) {
+				basePlugin.log("There was a problem setting the price " + price + " as the pay required for rank " + r.getName());
 			}
 		}
 		assignLists();
