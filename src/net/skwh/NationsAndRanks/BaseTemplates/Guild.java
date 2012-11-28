@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class Guild {
@@ -14,6 +15,7 @@ public class Guild {
 	private Set<Rank> ranks = new HashSet<Rank>();
 	private Set<Player> members = new HashSet<Player>();
 	private HashMap<Player, Rank> playerRankList = new HashMap<Player,Rank>();
+	private Location spawnPoint;
 	
 	public String getName() {
 		return name;
@@ -73,5 +75,13 @@ public class Guild {
 	public Guild(String name,Nation n) {
 		this.name = name;
 		this.ownerNation = n;
+	}
+
+	public Location getSpawnPoint() {
+		return spawnPoint;
+	}
+
+	public void setSpawnPoint(Location spawnPoint) {
+		this.spawnPoint = spawnPoint;
 	}
 }
