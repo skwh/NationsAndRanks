@@ -1,6 +1,10 @@
 package net.skwh.NationsAndRanks.Config;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.Utilites.SLAPI;
@@ -36,10 +40,33 @@ public class FileHandler extends Core {
 			getBaseCore().log("Finished saving settings files.");
 		}
 	}
+	
+	public void createNewFiles() {
+		getBaseCore().log("Creating new files...");
+		Path pNationList = fNationList.toPath();
+		Path pNationNameList = fNationList.toPath();
+		Path pNationNames = fNationNames.toPath();
+		Path pUserList = fUserList.toPath();
+		
+		try {
+			Files.createFile(pNationList);
+			Files.createFile(pNationNameList);
+			Files.createFile(pNationNames);
+			Files.createFile(pUserList);
+		} catch (FileAlreadyExistsException e) {
+			getBaseCore().log("Error creating new files (createNewFiles called erroneously): " + e.getMessage());
+		}catch (IOException e) {
+			getBaseCore().log("Error creating new files: " + e.getMessage());
+		}
+	}
+	
 	public FileHandler() {
-		fNationList = new File(getBaseCore().getDataFolder().getPath() + "\\NationList.bin");
-		fNationNameList = new File(getBaseCore().getDataFolder().getPath() + "\\NationNameList.bin");
-		fNationNames = new File(getBaseCore().getDataFolder().getPath() + "\\NationNames.bin");
-		fUserList = new File(getBaseCore().getDataFolder().getPath() + "\\UserList.bin");
+		try {
+			fNationList = new File("\\NationsAndRanks\\NationList.bin");
+			fNationNameList = new File("\\NationsAndRanks\\NationList.bin");
+			fNationNames = new File("\\NationsAndRanks\\NationList.bin");
+			fUserList = new File("\\NationsAndRanks\\NationList.bin");
+		} catch (NullPointerException e) {
+		}
 	}
 }
