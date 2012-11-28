@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.BaseTemplates.Guild;
 import net.skwh.NationsAndRanks.BaseTemplates.Nation;
+import net.skwh.NationsAndRanks.BaseTemplates.Rank;
 import net.skwh.NationsAndRanks.BaseTemplates.User;
 
 public class JamesBond extends Core {
@@ -100,6 +101,30 @@ public class JamesBond extends Core {
 			}
 		}
 		return null;
+	}
+	
+	public Set<String> rankGetNames(Set<Rank> arg0) {
+		Set<String> names = new HashSet<String>();
+		for (Rank r : arg0) {
+			names.add(r.getName());
+		}
+		return names;
+	}
+	
+	public Set<String> guildGetNames(Set<Guild> arg0) {
+		Set<String> names = new HashSet<String>();
+		for (Guild g : arg0) {
+			names.add(g.getName());
+		}
+		return names;
+	}
+	
+	public Set<String> nationGetNames(Set<Nation> arg0) {
+		Set<String> names = new HashSet<String>();
+		for (Nation n : arg0) {
+			names.add(n.getName());
+		}
+		return names;
 	}
 	
 	public boolean isPlayerInUserList(Player p) {
