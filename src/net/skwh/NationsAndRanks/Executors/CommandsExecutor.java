@@ -1,8 +1,11 @@
 package net.skwh.NationsAndRanks.Executors;
 
+import java.util.Set;
+
 import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.BaseTemplates.Guild;
 import net.skwh.NationsAndRanks.BaseTemplates.Nation;
+import net.skwh.NationsAndRanks.BaseTemplates.Rank;
 import net.skwh.NationsAndRanks.BaseTemplates.User;
 import net.skwh.NationsAndRanks.Utilites.JamesBond;
 
@@ -14,29 +17,22 @@ import org.bukkit.entity.Player;
 public class CommandsExecutor extends Core {
 	private static final JamesBond DoubleOhSeven = new JamesBond();
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!(sender instanceof Player)) {
-			sender.sendMessage(ChatColor.RED + "You must be a player to use this command!");
-			return true;
-		}
 		Player playah = (Player) sender;
 		if (args.length == 0) {
 			if (cmd.getName().equalsIgnoreCase("nar") || cmd.getName().equalsIgnoreCase("NationsAndRanks")) {
 				sender.sendMessage(ChatColor.GREEN + "NationsAndRanks v" + getBaseCore().getVersion() + " by SKWH");
 			}
-			if (cmd.getName().equalsIgnoreCase("getkit") || cmd.getName().equalsIgnoreCase("gk")) {
-				if (DoubleOhSeven.doesPlayerBelongToGuild(playah)) {
-					
-				} else {
-					playah.sendMessage("You must belong to a guild to get a kit!");
-				}
-			}
+		}
+		if (!(sender instanceof Player)) {
+			sender.sendMessage(ChatColor.RED + "You must be a player to use this command!");
+			return true;
 		}
 		if (args.length == 1) {
 			if (cmd.getName().equalsIgnoreCase("SetVerbose") || cmd.getName().equalsIgnoreCase("sv")) {
 				boolean set;
-				if (args[0] == "true") {
+				if (args[0].equalsIgnoreCase("true")) {
 					set = true;
-				} else if (args[0] == "false") {
+				} else if (args[0].equalsIgnoreCase("false")) {
 					set = false;
 				} else {
 					sender.sendMessage(ChatColor.RED + "Please enter true or false.");
@@ -78,6 +74,7 @@ public class CommandsExecutor extends Core {
 					playah.sendMessage("You are already a citizen of a nation!");
 				}
 			}
+			//chat command to join a guild
 			if (cmd.getName().equalsIgnoreCase("JoinGuild") || cmd.getName().equalsIgnoreCase("jg")) {
 				String formattedArgs = args[0].toLowerCase();
 				if (DoubleOhSeven.doesPlayerBelongToCountry(playah)) {
@@ -110,6 +107,27 @@ public class CommandsExecutor extends Core {
 					}
 				} else {
 					playah.sendMessage("You must belong to a nation to join a guild!");
+				}
+			}
+			//command to get the nations/guilds/ranks (list)
+			if (cmd.getName().equalsIgnoreCase("list")) {
+				if (args[0].equalsIgnoreCase("nations")) {
+					playah.sendMessage("Nation list: " + getBaseCore().getNationNames().toString());
+				} else if (args[0].equalsIgnoreCase("guilds")) {
+					if (DoubleOhSeven.doesPlayerBelongToCountry(playah)) {
+						Set<Guild> guildList = DoubleOhSeven.getNationForPlayer(playah).getGuilds();
+						playah.sendMessage("Guild list: " + guildList.toString());
+						
+					} else {
+						playah.sendMessage(ChatColor.RED + "You must belong to a nation to get the list of guilds!");
+					}
+				} else if (args[0].equalsIgnoreCase("ranks")) {
+					if (DoubleOhSeven.doesPlayerBelongToGuild(playah)) {
+						Set<Rank> rankList = DoubleOhSeven.getGuildForPlayer(playah).getRanks();
+						playah.sendMessage("Rank List: " + rankList.toString());
+					} else {
+						playah.sendMessage(ChatColor.RED + "You must belong to a guild to get the list of ranks!");
+					}
 				}
 			}
 		}
