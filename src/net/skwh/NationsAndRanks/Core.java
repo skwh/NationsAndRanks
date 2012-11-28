@@ -9,7 +9,7 @@ import net.skwh.NationsAndRanks.BaseTemplates.User;
 import net.skwh.NationsAndRanks.Config.FileHandler;
 import net.skwh.NationsAndRanks.Config.Settings;
 import net.skwh.NationsAndRanks.Executors.CommandsExecutor;
-import net.skwh.NationsAndRanks.Listeners.PlayerInteractListener;
+import net.skwh.NationsAndRanks.Listeners.EntityDamageByEntityListener;
 import net.skwh.NationsAndRanks.Listeners.PlayerJoinListener;
 
 import org.bukkit.command.Command;
@@ -72,8 +72,8 @@ public class Core extends JavaPlugin {
 			this.getLogger().info(text);
 		}
 	}
-	private void setUpListeners() { //TODO: add PlayerSpawn listener for kit assignment and PVP only thingy
-		final Listener[] listeners = {new PlayerJoinListener(), new PlayerInteractListener()};
+	private void setUpListeners() { //TODO: add PVP only thingy
+		final Listener[] listeners = {new PlayerJoinListener(), new EntityDamageByEntityListener()};
 		for (Listener l : listeners) {
 			getServer().getPluginManager().registerEvents(l, this);
 			log("Registered " + l.getClass().getSimpleName() + "'s event methods.");
