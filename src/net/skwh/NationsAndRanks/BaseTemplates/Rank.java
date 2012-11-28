@@ -6,8 +6,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class Rank {
-	public final String name;
-	public final Guild ownerGuild;
+	private final String name;
+	private final Guild ownerGuild;
 	private Rank up;
 	private Rank down;
 	private Set<ItemStack> kit;
@@ -18,6 +18,14 @@ public class Rank {
 	}
 	public Rank getDown() {
 		return down;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public Guild getOwnerGuild() {
+		return ownerGuild;
 	}
 	
 	public int getPayRequired() {
@@ -39,10 +47,6 @@ public class Rank {
 		} catch (Exception e) {
 			throw e;
 		}
-	}
-	
-	public String getName() {
-		return name;
 	}
 	
 	public Rank(Rank u,Rank d,String n,Guild g) {
