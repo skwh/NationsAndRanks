@@ -2,7 +2,6 @@ package net.skwh.NationsAndRanks.BaseTemplates;
 
 import java.util.Set;
 
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class Rank {
@@ -16,8 +15,14 @@ public class Rank {
 	public Rank getUp() {
 		return up;
 	}
+	public void setUp(Rank r) {
+		this.up = r;
+	}
 	public Rank getDown() {
 		return down;
+	}
+	public void setDown(Rank r) {
+		this.down=r;
 	}
 	
 	public String getName() {
