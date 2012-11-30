@@ -56,7 +56,7 @@ public class FileHandler extends Core {
 		} catch (FileAlreadyExistsException e) {
 			getBaseCore().log("Error creating new files (createNewFiles called erroneously): " + e.getMessage());
 		}catch (IOException e) {
-			getBaseCore().log("Error creating new files: " + e.getMessage());
+			getBaseCore().log("IOException, Error creating new files: " + e.getMessage());
 		}
 	}
 	
