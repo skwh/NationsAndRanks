@@ -3,10 +3,14 @@ package net.skwh.NationsAndRanks.BaseTemplates;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.skwh.NationsAndRanks.Core;
+
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class Nation {
+	private final Core baseCore;
 	private final String name;
 	private String short_name;
 	private Set<Player> citizens = new HashSet<Player>();
@@ -52,6 +56,10 @@ public class Nation {
 		return name;
 	}
 	
+	public Core getCore() {
+		return baseCore;
+	}
+	
 	public void setShortName(String s) {
 		short_name = s;
 	}
@@ -88,7 +96,8 @@ public class Nation {
 		}
 	}
 	
-	public Nation(String n) {
+	public Nation(String n, Core baseCore) {
+		this.baseCore = baseCore;
 		name = n;
 		uniqueColor = ChatColor.DARK_BLUE;
 	}
