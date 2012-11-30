@@ -113,7 +113,7 @@ public class Core extends JavaPlugin {
 			FE.createNewFiles();
 		}
 		FE.saveCreatedFiles();
-		this.getLogger().info("Nations and Ranks Disabled, Thanks for using our plugin!");
+		this.getLogger().info("Nations and Ranks Disabled, Thanks for using the plugin!");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
