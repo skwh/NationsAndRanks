@@ -3,6 +3,7 @@ package net.skwh.NationsAndRanks.BaseTemplates;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Vector;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,6 +17,7 @@ public class Guild {
 	private Set<Player> members = new HashSet<Player>();
 	private HashMap<Player, Rank> playerRankList = new HashMap<Player,Rank>();
 	private Location spawnPoint;
+	private Vector<Rank> ranksInOrder = new Vector<Rank>();
 	
 	public String getName() {
 		return name;
@@ -75,6 +77,7 @@ public class Guild {
 	public Guild(String name,Nation n) {
 		this.name = name;
 		this.ownerNation = n;
+		spawnPoint = n.getCore().getServer().getWorld(n.getCore().getWorldName()).getSpawnLocation();
 	}
 
 	public Location getSpawnPoint() {
@@ -83,5 +86,38 @@ public class Guild {
 
 	public void setSpawnPoint(Location spawnPoint) {
 		this.spawnPoint = spawnPoint;
+	}
+
+	public Vector<Rank> getRanksInOrder() {
+		return ranksInOrder;
+	}
+
+	public void setRanksInOrder(Vector<Rank> ranksInOrder) {
+		this.ranksInOrder = ranksInOrder;
+	}
+	
+	public void addToRanksInOrder(Rank r) {
+		ranksInOrder.add(r);
+	}
+	
+	public void addToRanksInOrderWithUpDown(Rank r) {
+		ranksInOrder.add(r);
+		if (ranksInOrder.size() != 1) {
+			Rank ru, rd;
+			try {
+				ru = ranksInOrder.elementAt(ranksInOrder.indexOf(r)+1);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				ru = r;
+			}
+			try {
+				rd = ranksInOrder.elementAt(ranksInOrder.indexOf(r)-1);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				rd = r;
+			}
+			r.setUp(ru);
+			r.setDown(rd);
+			ru.setDown(r);
+			rd.setUp(r);
+		}
 	}
 }
