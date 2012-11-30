@@ -1,3 +1,4 @@
+World_name: world
 Nations: [Dwarf,Human]
 Dwarf:
   Guilds: [Miner,Warrior]
@@ -5,24 +6,24 @@ Dwarf:
     Ranks: [Junior Miner,Senior Miner,Master Miner]
     Junior Miner:
       Price: 100
-      Items: [12,13,14,15]
+      Items: [270,269,298,50]
     Senior Miner:
       Price: 200
-      Items: [12,13,14,15]
+      Items: [257,306,256,50]
     Master Miner:
       Price: 300
-      Items: [12,13,14,15]
+      Items: [278,277,310,50]
   Warrior:
     Ranks: [Junior Warrior, Senior Warrior, Master Warrior]
     Junior Warrior:
       Price: 100
-      Items: [12,13,14,15]
+      Items: [268,320,298,299]
     Senior Warrior:
       Price: 200
-      Items: [12,13,14,15]
+      Items: [267,320,306,307]
     Master Warrior:
       Price: 300
-      Items: [12,13,14,15]
+      Items: [276,320,310,311]
 Human:
   Guilds: [Miner,Warrior]
   Miner:
