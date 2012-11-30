@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.skwh.NationsAndRanks.Core;
-import net.skwh.NationsAndRanks.BaseTemplates.Nation;
 import net.skwh.NationsAndRanks.BaseTemplates.User;
 import net.skwh.NationsAndRanks.Utilites.JamesBond;
 
