@@ -10,11 +10,27 @@ import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.BaseTemplates.Guild;
 import net.skwh.NationsAndRanks.BaseTemplates.Nation;
 import net.skwh.NationsAndRanks.BaseTemplates.Rank;
-
+/**
+ * @author Evan Derby <somekidwithhtml@gmail.com>
+ * @version 0.8
+ * @since 2012-11-29
+ */
 public class Settings extends ConfigLoader {
+	/**
+	 * A set of local Nations being parsed by {@link #loadKeys()}.
+	 */
 	private Set<Nation> NationList = new HashSet<Nation>();
+	/**
+	 * A set of local Guilds being parsed by {@link #loadKeys()}.
+	 */
 	private Set<Guild> GuildList = new HashSet<Guild>();
+	/**
+	 * A set of local Ranks being parsed by {@link #loadKeys()}.
+	 */
 	private Set<Rank> RankList = new HashSet<Rank>();
+	/**
+	 * A local copy of the given world name. 
+	 */
 	private String worldName;
 	
 	public Settings(Core baseCore,String filename) {
@@ -31,8 +47,9 @@ public class Settings extends ConfigLoader {
 		super.addDefaults();
 		loadKeys();
 	}
-	
-	@SuppressWarnings("unchecked")
+	/**
+	 * Loads the nations, guilds, ranks and settings from the config.yml file.
+	 */
 	protected void loadKeys() { //TODO: Test the FRICKING FOR LOOPS
 		worldName = config.getString("World_name");
 		basePlugin.setWorldName(worldName);
@@ -90,12 +107,14 @@ public class Settings extends ConfigLoader {
 		}
 		assignLists();
 	}
+	/**
+	 * Assigns the local copies of the lists to their {@link Core} counterparts.
+	 */
 	private void assignLists() {
-		for (int i=0;i<NationList.size();i++) {
-			Nation nationAtIndex = (Nation) NationList.toArray()[i];
-			basePlugin.getNationList().add((Nation) NationList.toArray()[i]);
-			basePlugin.getNation_NameList().put(nationAtIndex.getName(),nationAtIndex);
-			basePlugin.getNationNames().add(nationAtIndex.getName());
+		for (Nation n : NationList) {
+			basePlugin.getNationList().add(n);
+			basePlugin.getNation_NameList().put(n.getName(),n);
+			basePlugin.getNationNames().add(n.getName());
 		}
 	}
 }

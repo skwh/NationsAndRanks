@@ -6,17 +6,45 @@ import java.util.Set;
 import net.skwh.NationsAndRanks.Core;
 
 import org.bukkit.ChatColor;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
-
+/**
+ * The template for a nation.
+ * @author Evan Derby <somekidwithhtml@gmail.com>
+ * @version 0.8
+ * @since 2012-11-29
+ */
 public class Nation {
+	/**
+	 * The local reference to the main {@link Core}.
+	 */
 	private final Core baseCore;
+	/**
+	 * The name of the Nation.
+	 */
 	private final String name;
+	/**
+	 * Short name of the Nation.
+	 * @deprecated
+	 */
 	private String short_name;
+	/**
+	 * The set of all players belonging to this Nation.
+	 */
 	private Set<Player> citizens = new HashSet<Player>();
+	/**
+	 * The Set of all guilds contained in this Nation.
+	 */
 	private Set<Guild> guilds = new HashSet<Guild>();
+	/**
+	 * The chat color for this Nation.
+	 */
 	private ChatColor uniqueColor;
 	
+	/**
+	 * Sets the uniqueColor. Used by {@link CommandsExecutor#onCommand()}.
+	 * @param s -String: The new color to be assigned.
+	 * @throws Exception
+	 */
 	public void setColor(String s) throws Exception {
 		boolean oops = false;
 		switch (s) {
@@ -48,28 +76,57 @@ public class Nation {
 			this.refreshCitizens();
 		}
 	}
+	/**
+	 * The getter for this nation's chat color.
+	 * @return ChatColor uniqueColor
+	 */
 	public ChatColor getColor() {
 		return uniqueColor;
 	}
 	
+	/**
+	 * Gets the name of this Nation.
+	 * @return String name
+	 */
 	public String getName() {
 		return name;
 	}
-	
+	/**
+	 * Gets the {@link Core} for this Nation.
+	 * @return Core baseCore
+	 */
 	public Core getCore() {
 		return baseCore;
 	}
 	
+	/**
+	 * Sets the short name for this Nation.
+	 * @deprecated
+	 * @param s String
+	 */
 	public void setShortName(String s) {
 		short_name = s;
 	}
+	/**
+	 * Gets the short name for this Nation.
+	 * @deprecated
+	 * @return
+	 */
 	public String getShortName() {
 		return short_name;
 	}
-	
+	/**
+	 * Gets the set of {@link #citizens}.
+	 * @return
+	 */
 	public Set<Player> getCitizens() {
 		return citizens;
 	}
+	/**
+	 * Adds a player to the set of {@link #citizens}.
+	 * @param p {@link Player}
+	 * @throws Exception
+	 */
 	public void addCitizen(Player p) throws Exception {
 		try {
 			getCitizens().add(p);
@@ -78,9 +135,18 @@ public class Nation {
 		}
 	}
 	
+	/**
+	 * Gets the set of {@link #guilds}.
+	 * @return {@link #guilds}
+	 */
 	public Set<Guild> getGuilds() {
 		return guilds;
 	}
+	/**
+	 * Adds a guild to the set of {@link #guilds}.
+	 * @param g {@link Guild}
+	 * @throws Exception
+	 */
 	public void addGuild(Guild g) throws Exception {
 		try {
 			guilds.add(g);
@@ -89,6 +155,9 @@ public class Nation {
 		}
 	}
 	
+	/**
+	 * Re-assigns the chat prefix for all citizens of this nation.
+	 */
 	public void refreshCitizens() {
 		for (int i=0;i<citizens.toArray().length;i++) {
 			Player p = (Player) citizens.toArray()[i];
@@ -96,6 +165,11 @@ public class Nation {
 		}
 	}
 	
+	/**
+	 * Constructor, automatically sets the color to {@link ChatColor#DARK_BLUE}.
+	 * @param n {@link String}
+	 * @param baseCore {@link Core}
+	 */
 	public Nation(String n, Core baseCore) {
 		this.baseCore = baseCore;
 		name = n;

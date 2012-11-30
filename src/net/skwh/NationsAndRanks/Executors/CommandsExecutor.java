@@ -12,9 +12,24 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
+/**
+ * @author Evan Derby <somekidwithhtml@gmail.com>
+ * @version 0.8
+ * @since 2012-11-29
+ */
 public class CommandsExecutor extends Core {
+	/**
+	 * Local instance of JamesBond used in {@link #CommandsExecutor()}.
+	 */
 	private static final JamesBond DoubleOhSeven = new JamesBond();
+	
+	/**
+	 * Handles command requests from {@link Core}.
+	 * 
+	 * @param sender See {@link CommandSender}.
+	 * @param cmd See {@link Command}.
+	 * @param args An array of arguments provided.
+	 */
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		Player playah = (Player) sender;
 		if (args.length == 0) {
@@ -131,6 +146,10 @@ public class CommandsExecutor extends Core {
 						playah.sendMessage(ChatColor.RED + "You must belong to a guild to get the list of ranks!");
 					}
 				}
+			}
+			// setguildspawn
+			if (cmd.getName().equalsIgnoreCase("SetGuildSpawn") || cmd.getName().equalsIgnoreCase("sgs")) {
+				
 			}
 		}
 		if (args.length == 2) {
