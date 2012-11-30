@@ -20,6 +20,7 @@ public class EntityDamageByEntityListener extends Core implements Listener {
 		if (damaged.getType() == EntityType.PLAYER && damager.getType() == EntityType.PLAYER) { 
 			Player dd = (Player) damaged;
 			Player dr = (Player) damager;
+			getBaseCore().log("Player " + dr.getDisplayName() + " damaged " + dd.getDisplayName());
 			if (DoubleOhSeven.getNationForPlayer(dd) == DoubleOhSeven.getNationForPlayer(dr)) {
 				e.setCancelled(true);
 			}
