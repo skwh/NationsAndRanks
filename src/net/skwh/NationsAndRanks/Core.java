@@ -50,7 +50,7 @@ public class Core extends JavaPlugin {
 	public void setVerbosity(boolean b) {
 		verbose = b;
 	}
-	
+	protected String defaultWorldName;
 	protected HashMap<Player,User> UserList = new HashMap<Player,User>();
 	protected Set<Nation> NationList = new HashSet<Nation>();
 	protected HashMap<String,Nation> Nation_NameList = new HashMap<String,Nation>();
@@ -67,6 +67,13 @@ public class Core extends JavaPlugin {
 	}
 	public Set<Nation> getNationList() {
 		return NationList;
+	}
+	
+	public String getWorldName() {
+		return defaultWorldName;
+	}
+	public void setWorldName(String s) {
+		defaultWorldName = s;
 	}
 	
 	public void log(String text) {
