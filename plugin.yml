@@ -34,6 +34,12 @@ commands:
     permission: NationsAndRanks.List
     usage: "Usage: /<command> [ranks/guilds/nations]"
     permission-message: You do not have access to this command!
+  SetGuildSpawn:
+    description: Sets the spawn of a given guild to the sender's current location.
+    aliases: [sgs]
+    permission: NationsAndRanks.SetGuildSpawn
+    usage: "Usage: /<command> [guild]"
+    permission-message: You do not have access to this command!
 permissions:
   NationsAndRanks.*:
     description: Gives access to all Nations and Ranks commands.
@@ -45,12 +51,13 @@ permissions:
       NationsAndRanks.JoinNation: true
       NationsAndRanks.JoinGuild: true
       NationsAndRanks.List: true
+      NationsAndRanks.SetGuildSpawn: true
   NationsAndRanks.Info:
     description: Gives access to the nar command.
     default: true
   NationsAndRanks.SetRank:
     description: Gives access to the SetRank command.
-    default: true
+    default: op
   NationsAndRanks.SetVerbose:
     description: Gives access to the SetVerbose command.
     default: op
@@ -63,3 +70,6 @@ permissions:
   NationsAndRanks.List:
     description: Gives access to the List command.
     default: true
+  NationsAndRanks.SetGuildSpawn:
+    description: Gives access to the SetGuildSpawn command.
+    default: op
