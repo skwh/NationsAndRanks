@@ -5,7 +5,6 @@ import java.util.Set;
 import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.BaseTemplates.Guild;
 import net.skwh.NationsAndRanks.BaseTemplates.Nation;
-import net.skwh.NationsAndRanks.BaseTemplates.Rank;
 import net.skwh.NationsAndRanks.BaseTemplates.User;
 import net.skwh.NationsAndRanks.Utilites.JamesBond;
 
@@ -21,6 +20,9 @@ public class CommandsExecutor extends Core {
 		if (args.length == 0) {
 			if (cmd.getName().equalsIgnoreCase("nar") || cmd.getName().equalsIgnoreCase("NationsAndRanks")) {
 				sender.sendMessage(ChatColor.GREEN + "NationsAndRanks v" + getBaseCore().getVersion() + " by SKWH");
+			}
+			if (cmd.getName().equalsIgnoreCase("list")) {
+				sender.sendMessage(ChatColor.DARK_PURPLE + cmd.getUsage());
 			}
 		}
 		if (!(sender instanceof Player)) {
@@ -82,6 +84,7 @@ public class CommandsExecutor extends Core {
 							try {
 								Guild g = DoubleOhSeven.getGuilds().get(args[0]);
 								g.addMember(playah);
+								g.setPlayerToRank(playah, g.getRanksInOrder().firstElement());
 							} catch (Exception e) {
 								failed = true;
 								getBaseCore().log("There was a problem adding player " + playah.getDisplayName() + " to a guild: " + e.getMessage());
@@ -117,7 +120,6 @@ public class CommandsExecutor extends Core {
 					if (DoubleOhSeven.doesPlayerBelongToCountry(playah)) {
 						Set<String> guildList = DoubleOhSeven.guildGetNames(DoubleOhSeven.getNationForPlayer(playah).getGuilds());
 						playah.sendMessage("Guild list: " + guildList.toString());
-						
 					} else {
 						playah.sendMessage(ChatColor.RED + "You must belong to a nation to get the list of guilds!");
 					}
