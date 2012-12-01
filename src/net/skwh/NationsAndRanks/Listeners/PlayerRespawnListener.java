@@ -3,7 +3,6 @@ package net.skwh.NationsAndRanks.Listeners;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -15,22 +14,22 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
 import net.skwh.NationsAndRanks.Core;
+import net.skwh.NationsAndRanks.BaseTemplates.Guild;
 import net.skwh.NationsAndRanks.Utilites.JamesBond;
 
 public class PlayerRespawnListener extends Core implements Listener {
-	private static final JamesBond DoubleOhSeven = new JamesBond();
 	
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
 		Player pl = e.getPlayer();
 		String s = pl.getName();
-		getBaseCore().log(ChatColor.DARK_AQUA + "Player " + pl.getName() + " respawned!");
-		getBaseCore().log(ChatColor.DARK_AQUA + "Does the player belong to a guild? " + DoubleOhSeven.doesPlayerBelongToGuild(s));
-		if (DoubleOhSeven.doesPlayerBelongToGuild(s)) {
+		getBaseCore().log("Player " + pl.getName() + " respawned!");
+		getBaseCore().log("Does the player belong to a guild? " + JamesBond.doesPlayerBelongToGuild(s));
+		if (JamesBond.doesPlayerBelongToGuild(s)) {
 			Set<ItemStack> kit = new HashSet<ItemStack>();
 			boolean failed = false;
 			try {
-				kit = DoubleOhSeven.getGuildForPlayer(s).getRankForPlayer(s).getKit();
+				kit = JamesBond.getGuildForPlayer(s).getRankForPlayer(s).getKit();
 			} catch (Exception e1) {
 				failed = true;
 				getBaseCore().log(e1.getMessage());
@@ -47,7 +46,8 @@ public class PlayerRespawnListener extends Core implements Listener {
 				pbRespawn = playerWorld.getSpawnLocation();
 			}
 			getBaseCore().log("What is the player's respawn point? x:" + pbRespawn.getX() + " y:" + pbRespawn.getY() + " z:" + pbRespawn.getZ());
-			Location gSP = DoubleOhSeven.getGuildForPlayer(s).getSpawnPoint();
+			Guild g = JamesBond.getGuildForPlayer(s);
+			Location gSP = g.getSpawnPoint();
 			if (pbRespawn != gSP) {
 				Command spawnCommand = new SpawnpointCommand();
 				String[] args = {pl.getName(),
