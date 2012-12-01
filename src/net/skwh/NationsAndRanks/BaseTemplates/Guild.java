@@ -156,17 +156,6 @@ public class Guild {
 	}
 	
 	/**
-	 * Constructor, automatically assigns the guild's spawnpoint to that of the default world's default spawn point.
-	 * @param name {@link String}
-	 * @param n {@link Nation}
-	 */
-	public Guild(String name,Nation n) {
-		this.name = name;
-		this.ownerNation = n;
-		this.spawnPoint = n.getCore().getServer().getWorld(n.getCore().getWorldName()).getSpawnLocation();
-	}
-	
-	/**
 	 * Returns the spawn point for this guild.
 	 * @return {@link #spawnPoint}
 	 */
@@ -227,5 +216,17 @@ public class Guild {
 			ru.setDown(r);
 			rd.setUp(r);
 		}
+	}
+	
+	/**
+	 * Constructor, automatically assigns the guild's spawnpoint to that of the default world's default spawn point.
+	 * @param name {@link String}
+	 * @param n {@link Nation}
+	 */
+	public Guild(String name,Nation n) {
+		this.name = name;
+		this.ownerNation = n;
+		this.spawnPoint = n.getCore().getServer().getWorld(n.getCore().getWorldName()).getSpawnLocation();
+		n.getCore().log("Default world name is: " + n.getCore().getWorldName());
 	}
 }
