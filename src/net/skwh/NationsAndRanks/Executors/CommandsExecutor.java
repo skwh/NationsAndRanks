@@ -18,10 +18,6 @@ import org.bukkit.entity.Player;
  * @since 2012-11-29
  */
 public class CommandsExecutor extends Core {
-	/**
-	 * Local instance of JamesBond used in {@link #CommandsExecutor()}.
-	 */
-	private static final JamesBond DoubleOhSeven = new JamesBond();
 	
 	/**
 	 * Handles command requests from {@link Core}.
@@ -60,7 +56,7 @@ public class CommandsExecutor extends Core {
 			}
 			//chat command to join a nation
 			if (cmd.getName().equalsIgnoreCase("JoinNation") || cmd.getName().equalsIgnoreCase("jn")) {
-				if (!DoubleOhSeven.doesPlayerBelongToCountry(usahName)) {
+				if (!JamesBond.doesPlayerBelongToCountry(usahName)) {
 					boolean nationExists = baseCore.getNation_NameList().containsKey(args[0]);
 					if (nationExists) {
 						Nation n = getBaseCore().getNation_NameList().get(args[0]);
@@ -76,7 +72,7 @@ public class CommandsExecutor extends Core {
 							} else {
 								playah.sendMessage(ChatColor.GREEN + "Congradulations, Welcome to " + args[0] + ", " + playah.getDisplayName());
 								n.refreshCitizens();
-								if (!DoubleOhSeven.isPlayerInUserList(usahName)) {
+								if (!JamesBond.isPlayerInUserList(usahName)) {
 									User u = User.makeUserWithAttributes(playah, n, null, null);
 									User.addToUserList(getBaseCore(), u);
 								} else {
@@ -93,11 +89,12 @@ public class CommandsExecutor extends Core {
 			}
 			//chat command to join a guild
 			if (cmd.getName().equalsIgnoreCase("JoinGuild") || cmd.getName().equalsIgnoreCase("jg")) {
-				if (DoubleOhSeven.doesPlayerBelongToCountry(usahName)) {
-					if (!DoubleOhSeven.doesPlayerBelongToGuild(usahName)) {
-						if (DoubleOhSeven.getGuilds().containsKey(args[0])) {
+				if (JamesBond.doesPlayerBelongToCountry(usahName)) {
+					if (!JamesBond.doesPlayerBelongToGuild(usahName)) {
+						if (JamesBond.getGuilds().containsKey(args[0])) {
 							boolean failed = false;
-							Guild g = DoubleOhSeven.getGuilds().get(args[0]);
+							Guild g = JamesBond.getGuilds().get(args[0]);
+							getBaseCore().log("Ranks for guild: " + JamesBond.rankGetNames(g.getRanks()).toString());
 							try {
 								g.addMember(usahName);
 								g.setPlayerToRank(usahName, g.getRanksInOrder().firstElement());
@@ -109,12 +106,12 @@ public class CommandsExecutor extends Core {
 									playah.sendMessage(ChatColor.RED + "Sorry, there was a problem adding you to " + args[0] + ".");
 								} else {
 									playah.sendMessage(ChatColor.GREEN + "Welcome to " + args[0] + "," + playah.getDisplayName() + "!");
-									if (!DoubleOhSeven.isPlayerInUserList(usahName)) {
+									if (!JamesBond.isPlayerInUserList(usahName)) {
 										User u = new User(playah);
-										u.setNation(true, DoubleOhSeven.getNationForPlayer(u.getUserName()));
-										u.setGuild(true, DoubleOhSeven.getGuildForPlayer(u.getUserName()));
+										u.setNation(true, JamesBond.getNationForPlayer(u.getUserName()));
+										u.setGuild(true, JamesBond.getGuildForPlayer(u.getUserName()));
 									} else {
-										getBaseCore().getUserList().get(usahName).setGuild(true, DoubleOhSeven.getGuildForPlayer(usahName));
+										getBaseCore().getUserList().get(usahName).setGuild(true, JamesBond.getGuildForPlayer(usahName));
 									}
 								}
 							}
@@ -133,20 +130,20 @@ public class CommandsExecutor extends Core {
 				if (args[0].equalsIgnoreCase("nations") || args[0].equalsIgnoreCase("nation")) {
 					playah.sendMessage("Nation list: " + getBaseCore().getNationNames().toString());
 				} else if (args[0].equalsIgnoreCase("guilds") || args[0].equalsIgnoreCase("guild")) {
-					if (DoubleOhSeven.doesPlayerBelongToCountry(usahName)) {
-						Set<String> guildList = DoubleOhSeven.guildGetNames(DoubleOhSeven.getNationForPlayer(usahName).getGuilds());
+					if (JamesBond.doesPlayerBelongToCountry(usahName)) {
+						Set<String> guildList = JamesBond.guildGetNames(JamesBond.getNationForPlayer(usahName).getGuilds());
 						playah.sendMessage("Guild list: " + guildList.toString());
 					} else {
 						playah.sendMessage(ChatColor.RED + "You must belong to a nation to get the list of guilds!");
 					}
 				} else if (args[0].equalsIgnoreCase("ranks") || args[0].equalsIgnoreCase("rank")) {
-					if (DoubleOhSeven.doesPlayerBelongToGuild(usahName)) {
-						Guild g = DoubleOhSeven.getGuildForPlayer(usahName);
+					if (JamesBond.doesPlayerBelongToGuild(usahName)) {
+						Guild g = JamesBond.getGuildForPlayer(usahName);
 						if (g == null) {
 							playah.sendMessage("There was an error getting the ranks for this guild.");
 							return true;
 						}
-						Set<String> rankList = DoubleOhSeven.rankGetNames(g.getRanks());
+						Set<String> rankList = JamesBond.rankGetNames(g.getRanks());
 						playah.sendMessage("Rank List: " + rankList.toString());
 					} else {
 						playah.sendMessage(ChatColor.RED + "You must belong to a guild to get the list of ranks!");

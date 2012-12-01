@@ -11,7 +11,6 @@ import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.Utilites.JamesBond;
 
 public class EntityDamageByEntityListener extends Core implements Listener {
-	private static final JamesBond DoubleOhSeven = new JamesBond();
 	
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
@@ -21,7 +20,7 @@ public class EntityDamageByEntityListener extends Core implements Listener {
 			Player dd = (Player) damaged;
 			Player dr = (Player) damager;
 			getBaseCore().log("Player " + dr.getDisplayName() + " damaged " + dd.getDisplayName());
-			if (DoubleOhSeven.getNationForPlayer(dd.getName()) == DoubleOhSeven.getNationForPlayer(dr.getName())) {
+			if (JamesBond.getNationForPlayer(dd.getName()) == JamesBond.getNationForPlayer(dr.getName())) {
 				e.setCancelled(true);
 			}
 		}
