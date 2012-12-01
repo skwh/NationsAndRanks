@@ -5,8 +5,12 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Set;
 
 import net.skwh.NationsAndRanks.Core;
+import net.skwh.NationsAndRanks.BaseTemplates.Nation;
+import net.skwh.NationsAndRanks.BaseTemplates.User;
 import net.skwh.NationsAndRanks.Utilites.SLAPI;
 
 public class FileHandler extends Core {
@@ -14,15 +18,16 @@ public class FileHandler extends Core {
 	public boolean checkExistingFile() { //returns true if a file with nations exists
 		return fNationList.exists();
 	}
+	@SuppressWarnings("unchecked")
 	public void assignExistingFile() {
 		getBaseCore().log("Settings files detected, loading those...");
 		try {
-			NationList = SLAPI.load(fNationList.getPath());
-			Nation_NameList = SLAPI.load(fNationNameList.getPath());
-			UserList = SLAPI.load(fUserList.getPath());
-			NationNames = SLAPI.load(fNationNames.getPath());
+			setNationList((Set<Nation>) SLAPI.load(fNationList.getPath()));
+			setNation_NameList((HashMap<String, Nation>) SLAPI.load(fNationNameList.getPath()));
+			setUserList((HashMap<String, User>) SLAPI.load(fUserList.getPath()));
+			setNationNames((Set<String>) SLAPI.load(fNationNames.getPath()));
 		} catch (Exception e) {
-			getBaseCore().log("Error loading settings files, " + e.getMessage());
+			e.printStackTrace();
 		} finally {
 			getBaseCore().log("Finished loading settings files.");
 		}
@@ -44,7 +49,7 @@ public class FileHandler extends Core {
 	public void createNewFiles() {
 		getBaseCore().log("Creating new files...");
 		Path pNationList = fNationList.toPath();
-		Path pNationNameList = fNationList.toPath();
+		Path pNationNameList = fNationNameList.toPath();
 		Path pNationNames = fNationNames.toPath();
 		Path pUserList = fUserList.toPath();
 		
@@ -62,10 +67,10 @@ public class FileHandler extends Core {
 	
 	public FileHandler() {
 		try {
-			fNationList = new File("\\NationsAndRanks\\NationList.bin");
-			fNationNameList = new File("\\NationsAndRanks\\NationList.bin");
-			fNationNames = new File("\\NationsAndRanks\\NationList.bin");
-			fUserList = new File("\\NationsAndRanks\\NationList.bin");
+			fNationList = new File("plugins\\NationsAndRanks\\NationList.bin");
+			fNationNameList = new File("plugins\\NationsAndRanks\\NationNameList.bin");
+			fNationNames = new File("plugins\\NationsAndRanks\\NationNames.bin");
+			fUserList = new File("plugins\\NationsAndRanks\\UserList.bin");
 		} catch (NullPointerException e) {
 		}
 	}
