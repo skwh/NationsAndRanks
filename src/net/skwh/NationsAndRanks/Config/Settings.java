@@ -52,6 +52,7 @@ public class Settings extends ConfigLoader {
 	 */
 	protected void loadKeys() { //TODO: Test the FRICKING FOR LOOPS
 		worldName = config.getString("World_name");
+		basePlugin.log("World Name: " + worldName);
 		basePlugin.setWorldName(worldName);
 		
 		List<String> l1 = (List<String>) config.getList("Nations");
@@ -80,6 +81,11 @@ public class Settings extends ConfigLoader {
 				try {
 					RankList.add(currentRank);
 					g.addRank(currentRank);
+					if (g.getRanksInOrder().size() == 1) {
+						g.addToRanksInOrder(currentRank);
+					} else {
+						g.addToRanksInOrderWithUpDown(currentRank);
+					}
 				} catch (Exception e) {
 					basePlugin.log("There was an error adding rank " + currentRank.getName() + " to guild " + g.getName() + ":" + e.getMessage());
 				}
