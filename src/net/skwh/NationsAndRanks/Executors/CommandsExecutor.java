@@ -94,10 +94,8 @@ public class CommandsExecutor extends Core {
 						if (JamesBond.getGuilds().containsKey(args[0])) {
 							boolean failed = false;
 							Guild g = JamesBond.getGuilds().get(args[0]);
-							getBaseCore().log("Ranks for guild: " + JamesBond.rankGetNames(g.getRanks()).toString());
 							try {
-								g.addMember(usahName);
-								g.setPlayerToRank(usahName, g.getRanksInOrder().firstElement());
+								g.addMemberWithRank(usahName,g.getRanksInOrder().elementAt(0));
 							} catch (Exception e) {
 								failed = true;
 								e.printStackTrace();
@@ -106,6 +104,7 @@ public class CommandsExecutor extends Core {
 									playah.sendMessage(ChatColor.RED + "Sorry, there was a problem adding you to " + args[0] + ".");
 								} else {
 									playah.sendMessage(ChatColor.GREEN + "Welcome to " + args[0] + "," + playah.getDisplayName() + "!");
+									JamesBond.getNationForPlayer(usahName).refreshCitizens();
 									if (!JamesBond.isPlayerInUserList(usahName)) {
 										User u = new User(playah);
 										u.setNation(true, JamesBond.getNationForPlayer(u.getUserName()));
