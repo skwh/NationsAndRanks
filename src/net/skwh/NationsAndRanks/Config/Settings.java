@@ -10,6 +10,7 @@ import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.BaseTemplates.Guild;
 import net.skwh.NationsAndRanks.BaseTemplates.Nation;
 import net.skwh.NationsAndRanks.BaseTemplates.Rank;
+import net.skwh.NationsAndRanks.Utilites.JamesBond;
 /**
  * @author Evan Derby <somekidwithhtml@gmail.com>
  * @version 0.8
@@ -52,17 +53,14 @@ public class Settings extends ConfigLoader {
 	 */
 	protected void loadKeys() { //TODO: Test the FRICKING FOR LOOPS
 		worldName = config.getString("World_name");
-		basePlugin.log("World Name: " + worldName);
 		basePlugin.setWorldName(worldName);
 		
 		List<String> l1 = (List<String>) config.getList("Nations");
-		basePlugin.log("Nations Loaded: " + l1.toString());
 		for (String st : l1) {
 			NationList.add(new Nation(st,basePlugin));
 		}
 		for (Nation n : NationList) {
 			List<String> l2 = (List<String>) config.getList(n.getName() + ".Guilds");
-			basePlugin.log("Guilds Loaded " + l2.toString() + " for nation " + n.getName());
 			for (String st : l2) {
 				Guild currentGuild = new Guild(st,n);
 				try {
@@ -75,7 +73,6 @@ public class Settings extends ConfigLoader {
 		}
 		for (Guild g : GuildList) {
 			List<String> l3 = (List<String>) config.getList(g.getOwnerNation().getName() + "." + g.getName() + ".Ranks");
-			basePlugin.log("ranks loaded " + l3.toString() + " for guild " + g.getName());
 			for (String st : l3) {
 				Rank currentRank = new Rank(st,g);
 				try {
@@ -90,6 +87,7 @@ public class Settings extends ConfigLoader {
 					basePlugin.log("There was an error adding rank " + currentRank.getName() + " to guild " + g.getName() + ":" + e.getMessage());
 				}
 			}
+			basePlugin.log("Ranks loaded for guild " + g.getName() + ": " + JamesBond.rankGetNames(g.getRanks()).toString());
 		}
 		for (Rank r: RankList) {
 			int price = (int) config.getInt(r.getOwnerGuild().getOwnerNation().getName() + "." + r.getOwnerGuild().getName() + "." + r.getName() + ".Price");
@@ -99,7 +97,6 @@ public class Settings extends ConfigLoader {
 				ItemStack item = new ItemStack(i);
 				itemStacks.add(item);
 			}
-			basePlugin.log("details loaded for rank " + r.getName() + ", such as price: " + price + " and items: " + items.toString());
 			try {
 				r.setPayRequired(price);
 			} catch (Exception e) {
