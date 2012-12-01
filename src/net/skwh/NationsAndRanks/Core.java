@@ -15,7 +15,6 @@ import net.skwh.NationsAndRanks.Listeners.PlayerRespawnListener;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -112,21 +111,20 @@ public class Core extends JavaPlugin {
 	
 	public void onEnable() {
 		baseCore = this;
-		baseCore.log(getDataFolder().getPath());
 		setUpListeners();
-		if (!FE.checkExistingFile()) {
+		//if (!FE.checkExistingFile()) {
 			new Settings(this, "config.yml").load();
-			firstTime = true;
-		} else {
-			FE.assignExistingFile();
-		}
+		//	firstTime = true;
+		//} else {
+		//	FE.assignExistingFile();
+		//}
 	}
 	
 	public void onDisable() {
-		if (firstTime) {
+		/*if (firstTime) {
 			FE.createNewFiles();
 		}
-		FE.saveCreatedFiles();
+		FE.saveCreatedFiles();*/
 		this.getLogger().info("Nations and Ranks Disabled, Thanks for using the plugin!");
 	}
 	
