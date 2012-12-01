@@ -29,10 +29,10 @@ public class PlayerRespawnListener extends Core implements Listener {
 			Set<ItemStack> kit = new HashSet<ItemStack>();
 			boolean failed = false;
 			try {
-				kit = JamesBond.getGuildForPlayer(s).getRankForPlayer(s).getKit();
+				kit = JamesBond.getGuildForPlayer(s).getRankForPlayer(s).getKit(); //TODO: ERROR
 			} catch (Exception e1) {
 				failed = true;
-				getBaseCore().log(e1.getMessage());
+				e1.printStackTrace();
 			}
 			if (!failed) {
 				for (ItemStack i1 : kit) {
@@ -47,7 +47,7 @@ public class PlayerRespawnListener extends Core implements Listener {
 			}
 			getBaseCore().log("What is the player's respawn point? x:" + pbRespawn.getX() + " y:" + pbRespawn.getY() + " z:" + pbRespawn.getZ());
 			Guild g = JamesBond.getGuildForPlayer(s);
-			Location gSP = g.getSpawnPoint();
+			Location gSP = g.getSpawnPoint(); //TODO: ERROR
 			if (pbRespawn != gSP) {
 				Command spawnCommand = new SpawnpointCommand();
 				String[] args = {pl.getName(),
