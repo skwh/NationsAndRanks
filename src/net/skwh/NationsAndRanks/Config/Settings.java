@@ -3,6 +3,7 @@ package net.skwh.NationsAndRanks.Config;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 
 import org.bukkit.inventory.ItemStack;
 
@@ -28,7 +29,7 @@ public class Settings extends ConfigLoader {
 	/**
 	 * A set of local Ranks being parsed by {@link #loadKeys()}.
 	 */
-	private Set<Rank> RankList = new HashSet<Rank>();
+	private Vector<Rank> RankList = new Vector<Rank>();
 	/**
 	 * A local copy of the given world name. 
 	 */
@@ -87,10 +88,10 @@ public class Settings extends ConfigLoader {
 					basePlugin.log("There was an error adding rank " + currentRank.getName() + " to guild " + g.getName() + ":" + e.getMessage());
 				}
 			}
-			basePlugin.log("Ranks loaded for guild " + g.getName() + ": " + JamesBond.rankGetNames(g.getRanks()).toString());
 		}
 		for (Rank r: RankList) {
 			int price = (int) config.getInt(r.getOwnerGuild().getOwnerNation().getName() + "." + r.getOwnerGuild().getName() + "." + r.getName() + ".Price");
+			String color = (String) config.getString(r.getOwnerGuild().getOwnerNation().getName() + "." + r.getOwnerGuild().getName() + "." + r.getName() + ".Color");
 			List<Integer> items = (List<Integer>) config.getIntegerList(r.getOwnerGuild().getOwnerNation().getName() + "." + r.getOwnerGuild().getName() + "." + r.getName() + ".Items");
 			Set<ItemStack> itemStacks = new HashSet<ItemStack>();
 			for (int i : items) {
@@ -100,12 +101,17 @@ public class Settings extends ConfigLoader {
 			try {
 				r.setPayRequired(price);
 			} catch (Exception e) {
-				basePlugin.log("There was a problem setting the price " + price + " as the pay required for rank " + r.getName() + ":" + e.getMessage());
+				e.printStackTrace();
 			}
 			try {
 				r.setKit(itemStacks);
 			} catch(Exception e) {
-				basePlugin.log("There was a problem setting the kit for rank " + r.getName() + ":" + e.getMessage());
+				e.printStackTrace();
+			}
+			try {
+				r.setColor(JamesBond.interpretColor(color));
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		assignLists();
