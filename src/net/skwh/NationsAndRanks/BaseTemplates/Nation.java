@@ -161,8 +161,14 @@ public class Nation {
 	public void refreshCitizens() {
 		for (String st: citizens) {
 			Player p = getCore().getServer().getPlayer(st);
-			baseCore.log("Changing Player " + p.getName() + " from " + p.getDisplayName());
-			p.setDisplayName(uniqueColor + "[" + getName() + "] " + ChatColor.GOLD + p.getName() + ChatColor.WHITE);
+			User u = getCore().getUserList().get(st);
+			ChatColor rankColor;
+			try {
+				rankColor = u.getCurrentRank().getColor();
+			} catch (Exception e) {
+				rankColor = ChatColor.WHITE;
+			}
+			p.setDisplayName(uniqueColor + "[" + getName() + "] " + rankColor + p.getName() + ChatColor.WHITE);
 		}
 	}
 	
