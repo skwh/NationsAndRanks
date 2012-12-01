@@ -3,6 +3,7 @@ package net.skwh.NationsAndRanks.Listeners;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -22,11 +23,14 @@ public class PlayerRespawnListener extends Core implements Listener {
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
 		Player pl = e.getPlayer();
-		if (DoubleOhSeven.doesPlayerBelongToGuild(pl)) {
+		String s = pl.getName();
+		getBaseCore().log(ChatColor.DARK_AQUA + "Player " + pl.getName() + " respawned!");
+		getBaseCore().log(ChatColor.DARK_AQUA + "Does the player belong to a guild? " + DoubleOhSeven.doesPlayerBelongToGuild(s));
+		if (DoubleOhSeven.doesPlayerBelongToGuild(s)) {
 			Set<ItemStack> kit = new HashSet<ItemStack>();
 			boolean failed = false;
 			try {
-				kit = DoubleOhSeven.getGuildForPlayer(pl).getRankForPlayer(pl).getKit();
+				kit = DoubleOhSeven.getGuildForPlayer(s).getRankForPlayer(s).getKit();
 			} catch (Exception e1) {
 				failed = true;
 				getBaseCore().log(e1.getMessage());
@@ -42,7 +46,8 @@ public class PlayerRespawnListener extends Core implements Listener {
 				World playerWorld = pl.getWorld();
 				pbRespawn = playerWorld.getSpawnLocation();
 			}
-			Location gSP = DoubleOhSeven.getGuildForPlayer(pl).getSpawnPoint();
+			getBaseCore().log("What is the player's respawn point? x:" + pbRespawn.getX() + " y:" + pbRespawn.getY() + " z:" + pbRespawn.getZ());
+			Location gSP = DoubleOhSeven.getGuildForPlayer(s).getSpawnPoint();
 			if (pbRespawn != gSP) {
 				Command spawnCommand = new SpawnpointCommand();
 				String[] args = {pl.getName(),

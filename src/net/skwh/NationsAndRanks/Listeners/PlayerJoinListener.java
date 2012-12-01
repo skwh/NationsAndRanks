@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.skwh.NationsAndRanks.Core;
+import net.skwh.NationsAndRanks.BaseTemplates.Guild;
+import net.skwh.NationsAndRanks.BaseTemplates.Rank;
 import net.skwh.NationsAndRanks.BaseTemplates.User;
 import net.skwh.NationsAndRanks.Utilites.JamesBond;
 
@@ -18,25 +20,32 @@ public class PlayerJoinListener extends Core implements Listener {
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e) {
-		getBaseCore().log("Player " + e.getPlayer().getDisplayName() + " joined!");
 		Player p = e.getPlayer();
-		if (DoubleOhSeven.doesPlayerBelongToCountry(p)) {
-			DoubleOhSeven.getNationForPlayer(p).refreshCitizens();
+		String s = p.getName();
+		getBaseCore().log("Player " + p.getName() + " joined!");
+		getBaseCore().log("Has the player played before? " + p.hasPlayedBefore());
+		getBaseCore().log("Does the player belong to a country? " + DoubleOhSeven.doesPlayerBelongToCountry(s));
+		if (DoubleOhSeven.doesPlayerBelongToCountry(s)) {
+			DoubleOhSeven.getNationForPlayer(s).refreshCitizens();
 		}
-		
-		if (!DoubleOhSeven.isPlayerInUserList(p)) {
+		getBaseCore().log("Is the player in the user list? " + DoubleOhSeven.isPlayerInUserList(s));
+		if (!DoubleOhSeven.isPlayerInUserList(s)) {
 			User u = new User(p);
-			getBaseCore().getUserList().put(p, u);
+			getBaseCore().getUserList().put(s, u);
+			getBaseCore().log("A new user was added to the userlist, " + p.getName());
 		}
 		
-		if (DoubleOhSeven.doesPlayerBelongToGuild(p)) {
+		getBaseCore().log("Does the player belong to a guild? " + DoubleOhSeven.doesPlayerBelongToGuild(s));
+		if (DoubleOhSeven.doesPlayerBelongToGuild(s)) {
 			boolean failed = false;
 			Set<ItemStack> i = new HashSet<ItemStack>();
 			try {
-				i = DoubleOhSeven.getGuildForPlayer(p).getRankForPlayer(p).getKit();
+				Guild g = DoubleOhSeven.getGuildForPlayer(s);
+				Rank r = g.getRankForPlayer(s);
+				i = r.getKit();
 			} catch (Exception ex) {
 				failed = true;
-				getBaseCore().log("There was a problem giving the player " + p.getDisplayName() + " their rank's kit: " + ex.getMessage());
+				ex.printStackTrace();
 			} finally {
 				if (!failed) {
 					for (ItemStack jk : i) {

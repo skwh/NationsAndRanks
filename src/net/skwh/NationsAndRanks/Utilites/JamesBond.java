@@ -24,18 +24,18 @@ public class JamesBond extends Core {
 	 * @param p {@link Player}
 	 * @return {@link Boolean}
 	 */
-	public boolean doesPlayerBelongToCountry(Player p) {
-		if (!isPlayerInUserList(p)) {
+	public boolean doesPlayerBelongToCountry(String s) {
+		if (!isPlayerInUserList(s)) {
 			for (Nation n : getBaseCore().getNationList()) {
-				for (Player pl : n.getCitizens()) {
-					if (p == pl) {
+				for (String pl : n.getCitizens()) {
+					if (s == pl) {
 						return true;
 					}
 				}
 			}
 			return false;
 		} else {
-			User u = getBaseCore().getUserList().get(p);
+			User u = getBaseCore().getUserList().get(s);
 			return u.doesBelongToNation();
 		}
 	}
@@ -45,12 +45,12 @@ public class JamesBond extends Core {
 	 * @param p {@link Player}
 	 * @return {@link Boolean}
 	 */
-	public boolean doesPlayerBelongToGuild(Player p) {
-			if (!isPlayerInUserList(p)) {
+	public boolean doesPlayerBelongToGuild(String s) {
+			if (!isPlayerInUserList(s)) {
 			for (Nation n : getBaseCore().getNationList()) {
 				for (Guild g : n.getGuilds()) {
-					for (Player pl : g.getMembers()) {
-						if (p == pl) {
+					for (String pl : g.getMembers()) {
+						if (s == pl) {
 							return true;
 						}
 					}
@@ -58,7 +58,7 @@ public class JamesBond extends Core {
 			}
 			return false;
 		} else {
-			User u = getBaseCore().getUserList().get(p);
+			User u = getBaseCore().getUserList().get(s);
 			return u.doesBelongToGuild();
 		}
 	}
@@ -96,16 +96,16 @@ public class JamesBond extends Core {
 	 * @param p {@link Player}
 	 * @return {@link Guild}
 	 */
-	public Guild getGuildForPlayer(Player p) {
-		if (isPlayerInUserList(p)) {
-			return getBaseCore().getUserList().get(p).getGuild();
+	public Guild getGuildForPlayer(String s) {
+		if (isPlayerInUserList(s)) {
+			return getBaseCore().getUserList().get(s).getGuild();
 		} else {
 			HashMap<String,Guild> hashGuilds = getGuilds();
 			Set<String> GuildNames = getGuildNames();
 			for (String st : GuildNames) {
 				Guild currentGuild = hashGuilds.get(st);
-				for (Player pl : currentGuild.getMembers()) {
-					if (p == pl) {
+				for (String pl : currentGuild.getMembers()) {
+					if (s == pl) {
 						return currentGuild;
 					}
 				}
@@ -116,19 +116,19 @@ public class JamesBond extends Core {
 	
 	/**
 	 * Returns the nation a player belongs to, if any.
-	 * @param p {@link Player}
+	 * @param s {@link String}
 	 * @return {@link Nation}
 	 */
-	public Nation getNationForPlayer(Player p) {
-		if (isPlayerInUserList(p)) {
-			return getBaseCore().getUserList().get(p).getNation();
+	public Nation getNationForPlayer(String s) {
+		if (isPlayerInUserList(s)) {
+			return getBaseCore().getUserList().get(s).getNation();
 		} else {
 			HashMap<String,Nation> hashNations = getBaseCore().getNation_NameList();
 			Set<String> NationNames = getBaseCore().getNationNames();
 			for (String st : NationNames) {
 				Nation currentNation = hashNations.get(st);
-				for (Player pl : currentNation.getCitizens()) {
-					if (p == pl) {
+				for (String pl : currentNation.getCitizens()) {
+					if (s == pl) {
 						return currentNation;
 					}
 				}
@@ -181,8 +181,8 @@ public class JamesBond extends Core {
 	 * @param p {@link Player}
 	 * @return {@link Boolean}
 	 */
-	public boolean isPlayerInUserList(Player p) {
-		return getBaseCore().getUserList().containsKey(p);
+	public boolean isPlayerInUserList(String s) {
+		return getBaseCore().getUserList().containsKey(s);
 	}
 	
 	/**

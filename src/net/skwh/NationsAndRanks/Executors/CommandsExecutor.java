@@ -32,6 +32,7 @@ public class CommandsExecutor extends Core {
 	 */
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		Player playah = (Player) sender;
+		String usahName = playah.getName();
 		if (args.length == 0) {
 			if (cmd.getName().equalsIgnoreCase("nar") || cmd.getName().equalsIgnoreCase("NationsAndRanks")) {
 				sender.sendMessage(ChatColor.GREEN + "NationsAndRanks v" + getBaseCore().getVersion() + " by SKWH");
@@ -59,13 +60,13 @@ public class CommandsExecutor extends Core {
 			}
 			//chat command to join a nation
 			if (cmd.getName().equalsIgnoreCase("JoinNation") || cmd.getName().equalsIgnoreCase("jn")) {
-				if (!DoubleOhSeven.doesPlayerBelongToCountry(playah)) {
+				if (!DoubleOhSeven.doesPlayerBelongToCountry(usahName)) {
 					boolean nationExists = baseCore.getNation_NameList().containsKey(args[0]);
 					if (nationExists) {
 						Nation n = getBaseCore().getNation_NameList().get(args[0]);
 						boolean failure = false;
 						try {
-							n.addCitizen(playah);
+							n.addCitizen(usahName);
 						} catch (Exception e) {
 							failure = true;
 							getBaseCore().log("Error adding player to nation: " + e.getMessage());
@@ -75,11 +76,11 @@ public class CommandsExecutor extends Core {
 							} else {
 								playah.sendMessage(ChatColor.GREEN + "Congradulations, Welcome to " + args[0] + ", " + playah.getDisplayName());
 								n.refreshCitizens();
-								if (!DoubleOhSeven.isPlayerInUserList(playah)) {
+								if (!DoubleOhSeven.isPlayerInUserList(usahName)) {
 									User u = User.makeUserWithAttributes(playah, n, null, null);
 									User.addToUserList(getBaseCore(), u);
 								} else {
-									getBaseCore().getUserList().get(playah).setNation(true, n);
+									getBaseCore().getUserList().get(usahName).setNation(true, n);
 								}
 							}
 						}
@@ -92,28 +93,28 @@ public class CommandsExecutor extends Core {
 			}
 			//chat command to join a guild
 			if (cmd.getName().equalsIgnoreCase("JoinGuild") || cmd.getName().equalsIgnoreCase("jg")) {
-				if (DoubleOhSeven.doesPlayerBelongToCountry(playah)) {
-					if (!DoubleOhSeven.doesPlayerBelongToGuild(playah)) {
+				if (DoubleOhSeven.doesPlayerBelongToCountry(usahName)) {
+					if (!DoubleOhSeven.doesPlayerBelongToGuild(usahName)) {
 						if (DoubleOhSeven.getGuilds().containsKey(args[0])) {
 							boolean failed = false;
+							Guild g = DoubleOhSeven.getGuilds().get(args[0]);
 							try {
-								Guild g = DoubleOhSeven.getGuilds().get(args[0]);
-								g.addMember(playah);
-								g.setPlayerToRank(playah, g.getRanksInOrder().firstElement());
+								g.addMember(usahName);
+								g.setPlayerToRank(usahName, g.getRanksInOrder().firstElement());
 							} catch (Exception e) {
 								failed = true;
-								getBaseCore().log("There was a problem adding player " + playah.getDisplayName() + " to a guild: " + e.getMessage());
+								e.printStackTrace();
 							} finally {
 								if (failed) {
 									playah.sendMessage(ChatColor.RED + "Sorry, there was a problem adding you to " + args[0] + ".");
 								} else {
 									playah.sendMessage(ChatColor.GREEN + "Welcome to " + args[0] + "," + playah.getDisplayName() + "!");
-									if (!DoubleOhSeven.isPlayerInUserList(playah)) {
+									if (!DoubleOhSeven.isPlayerInUserList(usahName)) {
 										User u = new User(playah);
-										u.setNation(true, DoubleOhSeven.getNationForPlayer(u.getPlayer()));
-										u.setGuild(true, DoubleOhSeven.getGuildForPlayer(u.getPlayer()));
+										u.setNation(true, DoubleOhSeven.getNationForPlayer(u.getUserName()));
+										u.setGuild(true, DoubleOhSeven.getGuildForPlayer(u.getUserName()));
 									} else {
-										getBaseCore().getUserList().get(playah).setGuild(true, DoubleOhSeven.getGuildForPlayer(playah));
+										getBaseCore().getUserList().get(usahName).setGuild(true, DoubleOhSeven.getGuildForPlayer(usahName));
 									}
 								}
 							}
@@ -132,15 +133,20 @@ public class CommandsExecutor extends Core {
 				if (args[0].equalsIgnoreCase("nations") || args[0].equalsIgnoreCase("nation")) {
 					playah.sendMessage("Nation list: " + getBaseCore().getNationNames().toString());
 				} else if (args[0].equalsIgnoreCase("guilds") || args[0].equalsIgnoreCase("guild")) {
-					if (DoubleOhSeven.doesPlayerBelongToCountry(playah)) {
-						Set<String> guildList = DoubleOhSeven.guildGetNames(DoubleOhSeven.getNationForPlayer(playah).getGuilds());
+					if (DoubleOhSeven.doesPlayerBelongToCountry(usahName)) {
+						Set<String> guildList = DoubleOhSeven.guildGetNames(DoubleOhSeven.getNationForPlayer(usahName).getGuilds());
 						playah.sendMessage("Guild list: " + guildList.toString());
 					} else {
 						playah.sendMessage(ChatColor.RED + "You must belong to a nation to get the list of guilds!");
 					}
 				} else if (args[0].equalsIgnoreCase("ranks") || args[0].equalsIgnoreCase("rank")) {
-					if (DoubleOhSeven.doesPlayerBelongToGuild(playah)) {
-						Set<String> rankList = DoubleOhSeven.rankGetNames(DoubleOhSeven.getGuildForPlayer(playah).getRanks());
+					if (DoubleOhSeven.doesPlayerBelongToGuild(usahName)) {
+						Guild g = DoubleOhSeven.getGuildForPlayer(usahName);
+						if (g == null) {
+							playah.sendMessage("There was an error getting the ranks for this guild.");
+							return true;
+						}
+						Set<String> rankList = DoubleOhSeven.rankGetNames(g.getRanks());
 						playah.sendMessage("Rank List: " + rankList.toString());
 					} else {
 						playah.sendMessage(ChatColor.RED + "You must belong to a guild to get the list of ranks!");

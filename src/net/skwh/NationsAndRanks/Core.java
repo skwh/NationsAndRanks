@@ -11,6 +11,7 @@ import net.skwh.NationsAndRanks.Config.Settings;
 import net.skwh.NationsAndRanks.Executors.CommandsExecutor;
 import net.skwh.NationsAndRanks.Listeners.EntityDamageByEntityListener;
 import net.skwh.NationsAndRanks.Listeners.PlayerJoinListener;
+import net.skwh.NationsAndRanks.Listeners.PlayerRespawnListener;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -51,12 +52,12 @@ public class Core extends JavaPlugin {
 		verbose = b;
 	}
 	protected String defaultWorldName;
-	protected HashMap<Player,User> UserList = new HashMap<Player,User>();
+	protected HashMap<String,User> UserList = new HashMap<String,User>();
 	protected Set<Nation> NationList = new HashSet<Nation>();
 	protected HashMap<String,Nation> Nation_NameList = new HashMap<String,Nation>();
 	protected Set<String> NationNames = new HashSet<String>();
 	
-	public HashMap<Player,User> getUserList() {
+	public HashMap<String,User> getUserList() {
 		return UserList;
 	}
 	public HashMap<String,Nation> getNation_NameList() {
@@ -67,6 +68,19 @@ public class Core extends JavaPlugin {
 	}
 	public Set<Nation> getNationList() {
 		return NationList;
+	}
+	
+	protected void setUserList(HashMap<String,User> ul) {
+		UserList = ul;
+	}
+	protected void setNation_NameList(HashMap<String,Nation> nnl) {
+		Nation_NameList = nnl;
+	}
+	protected void setNationList(Set<Nation> n) {
+		NationList = n;
+	}
+	protected void setNationNames(Set<String> n) {
+		NationNames = n;
 	}
 	
 	public String getWorldName() {
@@ -82,7 +96,7 @@ public class Core extends JavaPlugin {
 		}
 	}
 	private void setUpListeners() { //TODO: add PVP only thingy
-		final Listener[] listeners = {new PlayerJoinListener(), new EntityDamageByEntityListener()};
+		final Listener[] listeners = {new PlayerJoinListener(), new EntityDamageByEntityListener(), new PlayerRespawnListener()};
 		for (Listener l : listeners) {
 			getServer().getPluginManager().registerEvents(l, this);
 			log("Registered " + l.getClass().getSimpleName() + "'s event methods.");

@@ -32,13 +32,13 @@ public class Guild {
 	 */
 	private Set<Rank> ranks = new HashSet<Rank>();
 	/**
-	 * The set of members of this guild.
+	 * The set of members' usernames of this guild.
 	 */
-	private Set<Player> members = new HashSet<Player>();
+	private Set<String> members = new HashSet<String>();
 	/** 
 	 * A map of Players to their ranks.
 	 */
-	private HashMap<Player, Rank> playerRankList = new HashMap<Player,Rank>();
+	private HashMap<String, Rank> playerRankList = new HashMap<String,Rank>();
 	/**
 	 * The spawn point for this guild.
 	 */
@@ -80,7 +80,7 @@ public class Guild {
 	 * Returns the map of players to their ranks ({@link #playerRankList}).
 	 * @return {@link #playerRankList}
 	 */
-	public HashMap<Player, Rank> getPlayerRankList() {
+	public HashMap<String, Rank> getPlayerRankList() {
 		return playerRankList;
 	}
 	
@@ -89,12 +89,12 @@ public class Guild {
 	 * @param p {@link Player}
 	 * @param r {@link Rank}
 	 */
-	public void setPlayerToRank(Player p, Rank r) {
-		if (members.contains(p)) {
-			if (playerRankList.containsKey(p)) {
-				playerRankList.remove(p);
+	public void setPlayerToRank(String s, Rank r) {
+		if (members.contains(s)) {
+			if (playerRankList.containsKey(s)) {
+				playerRankList.remove(s);
 			}
-			playerRankList.put(p, r);
+			playerRankList.put(s, r);
 		}
 	}
 	
@@ -104,9 +104,9 @@ public class Guild {
 	 * @return {@link Rank}
 	 * @throws Exception
 	 */
-	public Rank getRankForPlayer(Player p) throws Exception {
-		if (playerRankList.containsKey(p)) {
-			return playerRankList.get(p);
+	public Rank getRankForPlayer(String s) throws Exception {
+		if (playerRankList.containsKey(s)) {
+			return playerRankList.get(s);
 		} else {
 			throw new Exception("The specified player is not in the ranklist.");
 		}
@@ -139,7 +139,7 @@ public class Guild {
 	 * Returns the set of members for this guild.
 	 * @return {@link #members}
 	 */ 
-	public Set<Player> getMembers() {
+	public Set<String> getMembers() {
 		return members;
 	}
 	/**
@@ -147,9 +147,9 @@ public class Guild {
 	 * @param p {@link Player}
 	 * @throws Exception
 	 */
-	public void addMember(Player p) throws Exception {
+	public void addMember(String s) throws Exception {
 		try {
-			members.add(p);
+			members.add(s);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -163,7 +163,7 @@ public class Guild {
 	public Guild(String name,Nation n) {
 		this.name = name;
 		this.ownerNation = n;
-		spawnPoint = n.getCore().getServer().getWorld(n.getCore().getWorldName()).getSpawnLocation();
+		this.spawnPoint = n.getCore().getServer().getWorld(n.getCore().getWorldName()).getSpawnLocation();
 	}
 	
 	/**

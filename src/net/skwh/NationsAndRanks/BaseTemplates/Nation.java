@@ -28,9 +28,9 @@ public class Nation {
 	 */
 	private String short_name;
 	/**
-	 * The set of all players belonging to this Nation.
+	 * The set of all players' usernames belonging to this Nation.
 	 */
-	private Set<Player> citizens = new HashSet<Player>();
+	private Set<String> citizens = new HashSet<String>();
 	/**
 	 * The Set of all guilds contained in this Nation.
 	 */
@@ -119,7 +119,7 @@ public class Nation {
 	 * Gets the set of {@link #citizens}.
 	 * @return
 	 */
-	public Set<Player> getCitizens() {
+	public Set<String> getCitizens() {
 		return citizens;
 	}
 	/**
@@ -127,9 +127,9 @@ public class Nation {
 	 * @param p {@link Player}
 	 * @throws Exception
 	 */
-	public void addCitizen(Player p) throws Exception {
+	public void addCitizen(String s) throws Exception {
 		try {
-			getCitizens().add(p);
+			getCitizens().add(s);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -159,9 +159,17 @@ public class Nation {
 	 * Re-assigns the chat prefix for all citizens of this nation.
 	 */
 	public void refreshCitizens() {
-		for (int i=0;i<citizens.toArray().length;i++) {
-			Player p = (Player) citizens.toArray()[i];
-			p.setDisplayName(uniqueColor + "[" + getName() + "] " + ChatColor.GOLD + p.getName() + ChatColor.WHITE);
+		for (String st: citizens) {
+			Player p = null;
+			for (Player pl : baseCore.getServer().getOnlinePlayers()) {
+				if (pl.getName() == st) {
+					p = pl;
+				}
+			}
+			if (p != null) {
+				baseCore.log("Changing Player " + p.getName() + " from " + p.getDisplayName());
+				p.setDisplayName(uniqueColor + "[" + getName() + "] " + ChatColor.GOLD + p.getName() + ChatColor.WHITE);
+			}
 		}
 	}
 	
