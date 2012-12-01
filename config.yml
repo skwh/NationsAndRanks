@@ -7,23 +7,29 @@ Dwarf:
     Junior Miner:
       Price: 100
       Items: [270,269,298,50]
+      Color: dark green
     Senior Miner:
       Price: 200
       Items: [257,306,256,50]
+      Color: dark purple
     Master Miner:
       Price: 300
       Items: [278,277,310,50]
+      Color: gold
   Warrior:
     Ranks: [Junior Warrior, Senior Warrior, Master Warrior]
     Junior Warrior:
       Price: 100
       Items: [268,320,298,299]
+      Color: dark green
     Senior Warrior:
       Price: 200
       Items: [267,320,306,307]
+      Color: red
     Master Warrior:
       Price: 300
       Items: [276,320,310,311]
+      Color: dark red
 Human:
   Guilds: [Miner,Warrior]
   Miner:
@@ -31,20 +37,26 @@ Human:
     Junior Miner:
       Price: 100
       Items: [12,13,14,15]
+      Color: White
     Senior Miner:
       Price: 200
       Items: [12,13,14,15]
+      Color: GREY
     Master Miner:
       Price: 300
       Items: [12,13,14,15]
+      Color: bLaCk
   Warrior:
     Ranks: [Junior Warrior, Senior Warrior, Master Warrior]
     Junior Warrior:
       Price: 100
       Items: [12,13,14,15]
+      Color: dark red
     Senior Warrior:
       Price: 200
       Items: [12,13,14,15]
+      Color: dark green
     Master Warrior:
       Price: 300
       Items: [12,13,14,15]
+      Color: dark aqua
