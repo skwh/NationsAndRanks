@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
+import net.skwh.NationsAndRanks.Utilites.JamesBond;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -86,7 +88,7 @@ public class Guild {
 	
 	/**
 	 * Sets a given player to a given rank.
-	 * @param p {@link Player}
+	 * @param s {@link String} Username
 	 * @param r {@link Rank}
 	 */
 	public void setPlayerToRank(String s, Rank r) {
@@ -100,11 +102,11 @@ public class Guild {
 	
 	/**
 	 * Gets the rank of a given player.
-	 * @param p {@link Player}
+	 * @param s {@link String} Username
 	 * @return {@link Rank}
 	 * @throws Exception
 	 */
-	public Rank getRankForPlayer(String s) throws Exception {
+	public Rank getRankForPlayer(String s) throws Exception { //TODO: ERROR
 		if (playerRankList.containsKey(s)) {
 			return playerRankList.get(s);
 		} else {
@@ -144,7 +146,7 @@ public class Guild {
 	}
 	/**
 	 * Adds a given player to the members of this guild.
-	 * @param p {@link Player}
+	 * @param s {@link String} Username
 	 * @throws Exception
 	 */
 	public void addMember(String s) throws Exception {
@@ -154,12 +156,27 @@ public class Guild {
 			throw e;
 		}
 	}
+	/**
+	 * Adds a given player to the set of members and automatically sets their rank to the given rank.
+	 * @param s {@link String} Username
+	 * @param r {@link Rank}
+	 * @throws Exception
+	 */
+	public void addMemberWithRank(String s,Rank r) throws Exception {
+		try {
+			members.add(s);
+			playerRankList.put(s, r);
+			JamesBond.getBaseCore().getUserList().get(s).setCurrentRank(r);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 	
 	/**
 	 * Returns the spawn point for this guild.
 	 * @return {@link #spawnPoint}
 	 */
-	public Location getSpawnPoint() {
+	public Location getSpawnPoint() { //TODO: ERROR
 		return spawnPoint;
 	}
 	/**
@@ -190,7 +207,7 @@ public class Guild {
 	 * @param r {@link Rank}
 	 */
 	public void addToRanksInOrder(Rank r) {
-		ranksInOrder.add(r);
+		ranksInOrder.addElement(r);
 	}
 	
 	/**
@@ -198,7 +215,7 @@ public class Guild {
 	 * @param r {@link Rank}
 	 */
 	public void addToRanksInOrderWithUpDown(Rank r) {
-		ranksInOrder.add(r);
+		ranksInOrder.addElement(r);
 		if (ranksInOrder.size() != 1) {
 			Rank ru, rd;
 			try {
@@ -227,6 +244,5 @@ public class Guild {
 		this.name = name;
 		this.ownerNation = n;
 		this.spawnPoint = n.getCore().getServer().getWorld(n.getCore().getWorldName()).getSpawnLocation();
-		n.getCore().log("Default world name is: " + n.getCore().getWorldName());
 	}
 }
