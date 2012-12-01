@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import net.skwh.NationsAndRanks.Core;
@@ -97,7 +98,9 @@ public class JamesBond extends Core {
 	 */
 	public static Guild getGuildForPlayer(String s) {
 		if (isPlayerInUserList(s)) {
-			return getBaseCore().getUserList().get(s).getGuild();
+			if (getBaseCore().getUserList().get(s).getGuild() != null) {
+				return getBaseCore().getUserList().get(s).getGuild();
+			}
 		} else {
 			HashMap<String,Guild> hashGuilds = getGuilds();
 			Set<String> GuildNames = getGuildNames();
@@ -120,7 +123,9 @@ public class JamesBond extends Core {
 	 */
 	public static Nation getNationForPlayer(String s) {
 		if (isPlayerInUserList(s)) {
-			return getBaseCore().getUserList().get(s).getNation();
+			if (getBaseCore().getUserList().get(s).getNation() != null) {
+				return getBaseCore().getUserList().get(s).getNation();
+			}
 		} else {
 			HashMap<String,Nation> hashNations = getBaseCore().getNation_NameList();
 			Set<String> NationNames = getBaseCore().getNationNames();
@@ -191,5 +196,83 @@ public class JamesBond extends Core {
 	 */
 	public static boolean isUserinUserList(User u) {
 		return getBaseCore().getUserList().containsValue(u);
+	}
+	/**
+	 * Reads strings and attempts to extract the corresponding {@link ChatColor} out of them.
+	 * If it can't figure out what the string is, it returns {@link ChatColor#WHITE}.
+	 * @param s {@link String}
+	 * @return {@link ChatColor}
+	 */
+	public static ChatColor interpretColor(String s) {
+		if (s == null) {
+			return ChatColor.WHITE;
+		}
+		if (s.equalsIgnoreCase("aqua")) {
+			return ChatColor.AQUA;
+		}
+		if (s.equalsIgnoreCase("black")) {
+			return ChatColor.BLACK;
+		}
+		if (s.equalsIgnoreCase("blue")) {
+			return ChatColor.BLUE;
+		}
+		if (s.equalsIgnoreCase("bold")) {
+			return ChatColor.BOLD;
+		}
+		if (s.equalsIgnoreCase("dark aqua")) {
+			return ChatColor.DARK_AQUA;
+		}
+		if (s.equalsIgnoreCase("dark blue")) {
+			return ChatColor.DARK_BLUE;
+		}
+		if (s.equalsIgnoreCase("dark gray")) {
+			return ChatColor.DARK_GRAY;
+		}
+		if (s.equalsIgnoreCase("dark green")) {
+			return ChatColor.DARK_GREEN;
+		}
+		if (s.equalsIgnoreCase("dark purple")) {
+			return ChatColor.DARK_PURPLE;
+		}
+		if (s.equalsIgnoreCase("dark red")) {
+			return ChatColor.DARK_RED;
+		}
+		if (s.equalsIgnoreCase("gold")) {
+			return ChatColor.GOLD;
+		}
+		if (s.equalsIgnoreCase("gray")) {
+			return ChatColor.GRAY;
+		}
+		if (s.equalsIgnoreCase("green")) {
+			return ChatColor.GREEN;
+		}
+		if (s.equalsIgnoreCase("italic")) {
+			return ChatColor.ITALIC;
+		}
+		if (s.equalsIgnoreCase("light purple")) {
+			return ChatColor.LIGHT_PURPLE;
+		}
+		if (s.equalsIgnoreCase("magic")) {
+			return ChatColor.MAGIC;
+		}
+		if (s.equalsIgnoreCase("red")) {
+			return ChatColor.RED;
+		}
+		if (s.equalsIgnoreCase("RESET")) {
+			return ChatColor.RESET;
+		}
+		if (s.equalsIgnoreCase("strikethrough")) {
+			return ChatColor.STRIKETHROUGH;
+		}
+		if (s.equalsIgnoreCase("underline")) {
+			return ChatColor.UNDERLINE;
+		}
+		if (s.equalsIgnoreCase("White")) {
+			return ChatColor.WHITE;
+		}
+		if (s.equalsIgnoreCase("yellow")) {
+			return ChatColor.YELLOW;
+		}
+		return ChatColor.WHITE;
 	}
 }
