@@ -160,16 +160,9 @@ public class Nation {
 	 */
 	public void refreshCitizens() {
 		for (String st: citizens) {
-			Player p = null;
-			for (Player pl : baseCore.getServer().getOnlinePlayers()) {
-				if (pl.getName() == st) {
-					p = pl;
-				}
-			}
-			if (p != null) {
-				baseCore.log("Changing Player " + p.getName() + " from " + p.getDisplayName());
-				p.setDisplayName(uniqueColor + "[" + getName() + "] " + ChatColor.GOLD + p.getName() + ChatColor.WHITE);
-			}
+			Player p = getCore().getServer().getPlayer(st);
+			baseCore.log("Changing Player " + p.getName() + " from " + p.getDisplayName());
+			p.setDisplayName(uniqueColor + "[" + getName() + "] " + ChatColor.GOLD + p.getName() + ChatColor.WHITE);
 		}
 	}
 	
