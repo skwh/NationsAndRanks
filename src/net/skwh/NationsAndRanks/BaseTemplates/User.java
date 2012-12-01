@@ -81,14 +81,20 @@ public class User {
 		return currentRank;
 	}
 	/**
-	 * Sets the current rank, and sets the player to that rank in the guild's player-rank list. ({@link Guild#getPlayerRankList()}).
+	 * Sets the current rank.
 	 * @param r {@link Rank}
 	 */
 	public void setCurrentRank(Rank r) {
 		currentRank = r;
+	}
+	/**
+	 * Sets the current rank, and sets the player to that rank in the guild's player-rank list. ({@link Guild#getPlayerRankList()})
+	 * @param r
+	 */
+	public void setCurrentRankGuild(Rank r) {
+		currentRank = r;
 		ownerGuild.setPlayerToRank(this.pl,r);
 	}
-	
 	/**
 	 * Returns if the player belongs to a nation.
 	 * @return {@link Boolean}
