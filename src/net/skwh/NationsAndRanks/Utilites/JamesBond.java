@@ -18,13 +18,12 @@ import net.skwh.NationsAndRanks.BaseTemplates.User;
  * @since 2012-11-29
  */
 public class JamesBond extends Core {
-	
 	/**
 	 * Returns whether or not the given player belongs to a nation.
 	 * @param p {@link Player}
 	 * @return {@link Boolean}
 	 */
-	public boolean doesPlayerBelongToCountry(String s) {
+	public static boolean doesPlayerBelongToCountry(String s) {
 		if (!isPlayerInUserList(s)) {
 			for (Nation n : getBaseCore().getNationList()) {
 				for (String pl : n.getCitizens()) {
@@ -45,7 +44,7 @@ public class JamesBond extends Core {
 	 * @param p {@link Player}
 	 * @return {@link Boolean}
 	 */
-	public boolean doesPlayerBelongToGuild(String s) {
+	public static boolean doesPlayerBelongToGuild(String s) {
 			if (!isPlayerInUserList(s)) {
 			for (Nation n : getBaseCore().getNationList()) {
 				for (Guild g : n.getGuilds()) {
@@ -67,7 +66,7 @@ public class JamesBond extends Core {
 	 * Returns a set of all the guild names.
 	 * @return {@link Set}
 	 */
-	public Set<String> getGuildNames() {
+	public static Set<String> getGuildNames() {
 			Set<String> GuildNames = new HashSet<String>();
 			for (Nation n : getBaseCore().getNationList()) {
 				for (Guild g : n.getGuilds()) {
@@ -81,7 +80,7 @@ public class JamesBond extends Core {
 	 * Returns a hashmap of guild names mapped to their objects.
 	 * @return {@link HashMap}
 	 */
-	public HashMap<String,Guild> getGuilds() {
+	public static HashMap<String,Guild> getGuilds() {
 		HashMap<String,Guild> GuildSet = new HashMap<String,Guild>();
 		for (Nation n : getBaseCore().getNationList()) {
 			for (Guild g : n.getGuilds()) {
@@ -96,7 +95,7 @@ public class JamesBond extends Core {
 	 * @param p {@link Player}
 	 * @return {@link Guild}
 	 */
-	public Guild getGuildForPlayer(String s) {
+	public static Guild getGuildForPlayer(String s) {
 		if (isPlayerInUserList(s)) {
 			return getBaseCore().getUserList().get(s).getGuild();
 		} else {
@@ -119,7 +118,7 @@ public class JamesBond extends Core {
 	 * @param s {@link String}
 	 * @return {@link Nation}
 	 */
-	public Nation getNationForPlayer(String s) {
+	public static Nation getNationForPlayer(String s) {
 		if (isPlayerInUserList(s)) {
 			return getBaseCore().getUserList().get(s).getNation();
 		} else {
@@ -142,7 +141,7 @@ public class JamesBond extends Core {
 	 * @param arg0 {@link Set}&#60;{@link Rank}&#62;
 	 * @return names {@link Set}&#60;{@link String}&#62;
 	 */
-	public Set<String> rankGetNames(Set<Rank> arg0) {
+	public static Set<String> rankGetNames(Set<Rank> arg0) {
 		Set<String> names = new HashSet<String>();
 		for (Rank r : arg0) {
 			names.add(r.getName());
@@ -155,7 +154,7 @@ public class JamesBond extends Core {
 	 * @param arg0 {@link Set}&#60;{@link Guild}&#62;
 	 * @return names {@link Set}&#60;{@link String}&#62;
 	 */
-	public Set<String> guildGetNames(Set<Guild> arg0) {
+	public static Set<String> guildGetNames(Set<Guild> arg0) {
 		Set<String> names = new HashSet<String>();
 		for (Guild g : arg0) {
 			names.add(g.getName());
@@ -168,7 +167,7 @@ public class JamesBond extends Core {
 	 * @param arg0 {@link Set}&#60;{@link Nation}&#62;
 	 * @return names {@link Set}&#60;{@link String}&#62;
 	 */
-	public Set<String> nationGetNames(Set<Nation> arg0) {
+	public static Set<String> nationGetNames(Set<Nation> arg0) {
 		Set<String> names = new HashSet<String>();
 		for (Nation n : arg0) {
 			names.add(n.getName());
@@ -181,7 +180,7 @@ public class JamesBond extends Core {
 	 * @param p {@link Player}
 	 * @return {@link Boolean}
 	 */
-	public boolean isPlayerInUserList(String s) {
+	public static boolean isPlayerInUserList(String s) {
 		return getBaseCore().getUserList().containsKey(s);
 	}
 	
@@ -190,7 +189,7 @@ public class JamesBond extends Core {
 	 * @param u {@link User}
 	 * @return {@link Boolean}
 	 */
-	public boolean isUserinUserList(User u) {
+	public static boolean isUserinUserList(User u) {
 		return getBaseCore().getUserList().containsValue(u);
 	}
 }
