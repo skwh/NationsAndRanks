@@ -2,6 +2,7 @@ package net.skwh.NationsAndRanks.BaseTemplates;
 
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 /**
  * The template for creating a Rank.
@@ -38,7 +39,10 @@ public class Rank {
 	 * The amount of money required to level up.
 	 */
 	private int payRequired;
-	
+	/**
+	 * The color that the player's name will appear in chat.
+	 */
+	private ChatColor color;
 	/**
 	 * Returns the up rank.
 	 * @return {@link #up}
@@ -121,6 +125,21 @@ public class Rank {
 			throw e;
 		}
 	}
+	/**
+	 * Returns the {@link #color}.
+	 * @return {@link ChatColor}
+	 */
+	public ChatColor getColor() {
+		return color;
+	}
+	/**
+	 * Sets the ChatColor {@link #color}.
+	 * @param r {@link ChatColor}
+	 */
+	public void setColor(ChatColor r) {
+		color = r;
+	}
+	
 	/**
 	 * Full Constructor 
 	 * @param u {@link Rank} Up rank.
