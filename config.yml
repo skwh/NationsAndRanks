@@ -1,4 +1,4 @@
-World_name: world
+World_name: "world"
 Nations: [Dwarf,Human]
 Dwarf:
   Guilds: [Miner,Warrior]
