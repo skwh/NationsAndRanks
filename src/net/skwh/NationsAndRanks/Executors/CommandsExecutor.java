@@ -146,24 +146,28 @@ public class CommandsExecutor extends Core {
 				}
 			}
 		}
-		if (args.length == 2) {
+		if (args.length == 3) {
 			if (cmd.getName().equalsIgnoreCase("setRank") || cmd.getName().equalsIgnoreCase("sr")) {
 				Player p = getBaseCore().getServer().getPlayer(args[0]);
+				String guildName = args[1] + " " + args[2];
 				if (p != null) {
 					User u = getBaseCore().getUserList().get(p.getName());
-					if (JamesBond.doesRankExistInGuild(args[1], u.getGuild())) {
-						try {
-							Rank r = JamesBond.getRankInGuild(args[1], u.getGuild());
-							u.getGuild().setPlayerToRank(p.getName(), r);
-							u.getNation().refreshCitizens();
-						} catch (Exception e) {
-							e.printStackTrace();
-							displayMessageToPlayer(playah, "There was a problem setting the player to that rank.");
-							return true;
+					if (JamesBond.doesPlayerBelongToGuild(p.getName())) {
+						if (JamesBond.doesRankExistInGuild(guildName, u.getGuild())) {
+							try {
+								Rank r = JamesBond.getRankInGuild(guildName, u.getGuild());
+								u.getGuild().setPlayerToRank(p.getName(), r);
+								u.setCurrentRank(r);
+								u.getNation().refreshCitizens();
+							} catch (Exception e) {
+								e.printStackTrace();
+								displayMessageToPlayer(playah, "There was a problem setting the player to that rank.");
+								return true;
+							}
+							displayMessageToPlayer(p, "Your rank has been set to " + guildName);
+						} else {
+							displayMessageToPlayer(playah, "That rank does not exist in the player's guild!");
 						}
-						displayMessageToPlayer(p, "Your rank has been set to " + args[1]);
-					} else {
-						displayMessageToPlayer(playah, "That rank does not exist in the player's guild!");
 					}
 				} else {
 					displayMessageToPlayer(playah, "That player does not exist!");
