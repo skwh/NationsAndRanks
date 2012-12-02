@@ -92,7 +92,9 @@ public class Settings extends ConfigLoader {
 		for (Rank r: RankList) {
 			int price = (int) config.getInt(r.getOwnerGuild().getOwnerNation().getName() + "." + r.getOwnerGuild().getName() + "." + r.getName() + ".Price");
 			String color = (String) config.getString(r.getOwnerGuild().getOwnerNation().getName() + "." + r.getOwnerGuild().getName() + "." + r.getName() + ".Color");
+			basePlugin.log("Color found for rank " + r.getName() + " in guild " + r.getOwnerGuild().getName() + " is as follows: " + color);
 			List<Integer> items = (List<Integer>) config.getIntegerList(r.getOwnerGuild().getOwnerNation().getName() + "." + r.getOwnerGuild().getName() + "." + r.getName() + ".Items");
+			basePlugin.log("Items found for rank " + r.getName() + " in guild " + r.getOwnerGuild().getName() + ", are as such: " + items.toString());
 			Set<ItemStack> itemStacks = new HashSet<ItemStack>();
 			for (int i : items) {
 				ItemStack item = new ItemStack(i);
