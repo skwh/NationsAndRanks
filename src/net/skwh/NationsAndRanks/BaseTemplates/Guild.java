@@ -9,7 +9,6 @@ import net.skwh.NationsAndRanks.Utilites.JamesBond;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 /**
  * The template for creating a guild.
  * @author Evan Derby <somekidwithhtml@gmail.com>
