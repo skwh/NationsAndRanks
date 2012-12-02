@@ -35,7 +35,7 @@ public class PlayerJoinListener extends Core implements Listener {
 			Set<ItemStack> i = new HashSet<ItemStack>();
 			try {
 				Guild g = JamesBond.getGuildForPlayer(s);
-				Rank r = g.getRankForPlayer(s); //TODO: ERROR
+				Rank r = g.getRankForPlayer(s);
 				i = r.getKit();
 			} catch (Exception ex) {
 				failed = true;
