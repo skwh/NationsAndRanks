@@ -11,15 +11,9 @@ commands:
     permission: NationsAndRanks.SetRank
     usage: "Usage: /<command> [player] [rank]"
     permission-message: You do not have access to this command!
-  SetVerbose:
-    description: Sets the length of descriptors for players.
-    aliases: [sv,SetVerbose]
-    permission: NationsAndRanks.SetVerbose
-    usage: "Usage: /<command> [true/false]"
-    permission-message: You do not have access to this command!
   JoinNation:
     description: The sender becomes a citizen of the given nation.
-    aliases: [jn,join,JoinNation]
+    aliases: [jn,JoinNation]
     permission: NationsAndRanks.JoinNation
     usage: "Usage: /<command> [nation]"
     permission-message: You do not have access to this command!
@@ -40,6 +34,12 @@ commands:
     permission: NationsAndRanks.SetGuildSpawn
     usage: "Usage: /<command> [guild]"
     permission-message: You do not have access to this command!
+  GetRank:
+    description: returns the Guild and rank of the sender, if any.
+    aliases: [gr]
+    permission: NationsAndRanks.GetRank
+    usage: "Usage: /<command>"
+    permission-message: You do not have access to this command!
 permissions:
   NationsAndRanks.*:
     description: Gives access to all Nations and Ranks commands.
@@ -47,19 +47,16 @@ permissions:
     children:
       NationsAndRanks.Info: true
       NationsAndRanks.SetRank: true
-      NationsAndRanks.SetVerbose: true
       NationsAndRanks.JoinNation: true
       NationsAndRanks.JoinGuild: true
       NationsAndRanks.List: true
       NationsAndRanks.SetGuildSpawn: true
+      NationsAndRanks.GetRank: true
   NationsAndRanks.Info:
     description: Gives access to the nar command.
     default: true
   NationsAndRanks.SetRank:
     description: Gives access to the SetRank command.
-    default: op
-  NationsAndRanks.SetVerbose:
-    description: Gives access to the SetVerbose command.
     default: op
   NationsAndRanks.JoinNation:
     description: Gives access to the JoinNation command.
@@ -73,3 +70,6 @@ permissions:
   NationsAndRanks.SetGuildSpawn:
     description: Gives access to the SetGuildSpawn command.
     default: op
+  NationsAndRanks.GetRank:
+    description: Gives access to the GetRank command.
+    default: true
