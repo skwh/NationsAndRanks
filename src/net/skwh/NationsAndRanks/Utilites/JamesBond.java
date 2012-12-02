@@ -7,6 +7,8 @@ import java.util.Vector;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.BaseTemplates.Guild;
@@ -233,7 +235,7 @@ public class JamesBond extends Core {
 	public static boolean doesRankExistInGuild(String s, Guild g) {
 		Set<Rank> rankList = g.getRanks();
 		for (Rank r : rankList) {
-			if (r.getName() == s) {
+			if (s.equalsIgnoreCase(r.getName())) {
 				return true;
 			}
 		}
@@ -253,6 +255,21 @@ public class JamesBond extends Core {
 			}
 		}
 		return null;
+	}
+	/**
+	 * Loops through {@link PlayerInventory#getArmorContents()} to see if the given {@link ItemStack} is included.
+	 * <br> Equivalent to {@link inventory#contains} for {@link PlayerInventory}.
+	 * @param pInv {@link PlayerInventory}
+	 * @param i {@link ItemStack}
+	 * @return {@link Boolean}
+	 */
+	public static boolean itemIsInArmorInventory(PlayerInventory pInv, ItemStack i) {
+		for (ItemStack is : pInv.getArmorContents()) {
+			if (is == i) {
+				return true;
+			}
+		}
+		return false;
 	}
 	/**
 	 * Reads strings and attempts to extract the corresponding {@link ChatColor} out of them. 
