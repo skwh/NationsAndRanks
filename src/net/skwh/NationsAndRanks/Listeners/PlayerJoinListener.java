@@ -43,7 +43,7 @@ public class PlayerJoinListener extends Core implements Listener {
 			} finally {
 				if (!failed) {
 					for (ItemStack jk : i) {
-						if (!p.getInventory().contains(jk)) {
+						if (!p.getInventory().contains(jk) && !JamesBond.itemIsInArmorInventory(p.getInventory(), jk)) {
 							p.getInventory().addItem(jk);
 						}
 					}
