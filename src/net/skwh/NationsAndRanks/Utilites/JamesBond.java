@@ -207,7 +207,55 @@ public class JamesBond extends Core {
 		return getBaseCore().getUserList().containsValue(u);
 	}
 	/**
-	 * Reads strings and attempts to extract the corresponding {@link ChatColor} out of them.
+	 * Returns true if the given rank name exists in any guild.
+	 * @param s {@link String} Rank Name
+	 * @return {@link Boolean}
+	 */
+	public static boolean doesRankExist(String s) {
+		HashMap<String,Guild> guildList = getGuilds();
+		Set<String> guildNames = getGuildNames();
+		for (String st : guildNames) {
+			Guild g = guildList.get(st);
+			for (Rank r : g.getRanks()) {
+				if (r.getName() == s) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	/**
+	 * Returns true if the given rank name exists in the given guild.
+	 * @param s {@link String} Rank Name
+	 * @param g {@link Guild}
+	 * @return {@link Boolean}
+	 */
+	public static boolean doesRankExistInGuild(String s, Guild g) {
+		Set<Rank> rankList = g.getRanks();
+		for (Rank r : rankList) {
+			if (r.getName() == s) {
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
+	 * Finds the rank in the given guild, if it doesn't exist, returns null.
+	 * @param s {@link String} Rank Name
+	 * @param g {@link Guild}
+	 * @return {@link Rank}
+	 */
+	public static Rank getRankInGuild(String s, Guild g) {
+		Set<Rank> rankList = g.getRanks();
+		for (Rank r: rankList) {
+			if (r.getName() == s) {
+				return r;
+			}
+		}
+		return null;
+	}
+	/**
+	 * Reads strings and attempts to extract the corresponding {@link ChatColor} out of them. 
 	 * If it can't figure out what the string is, it returns {@link ChatColor#WHITE}.
 	 * @param s {@link String}
 	 * @return {@link ChatColor}
@@ -249,7 +297,7 @@ public class JamesBond extends Core {
 		if (s.equalsIgnoreCase("gold")) {
 			return ChatColor.GOLD;
 		}
-		if (s.equalsIgnoreCase("gray")) {
+		if (s.equalsIgnoreCase("gray") || s.equalsIgnoreCase("grey")) {
 			return ChatColor.GRAY;
 		}
 		if (s.equalsIgnoreCase("green")) {
@@ -282,6 +330,7 @@ public class JamesBond extends Core {
 		if (s.equalsIgnoreCase("yellow")) {
 			return ChatColor.YELLOW;
 		}
+		getBaseCore().log("Couldn't understand color " + s);
 		return ChatColor.WHITE;
 	}
 }
