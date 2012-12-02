@@ -130,6 +130,7 @@ public class Nation {
 	public void addCitizen(String s) throws Exception {
 		try {
 			getCitizens().add(s);
+			refreshCitizens();
 		} catch (Exception e) {
 			throw e;
 		}
