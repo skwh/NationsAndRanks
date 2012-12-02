@@ -3,6 +3,7 @@ package net.skwh.NationsAndRanks.Utilites;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Vector;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -153,6 +154,14 @@ public class JamesBond extends Core {
 		}
 		return names;
 	}
+	public static Vector<String> rankGetNames(Vector<Rank> arg0) {
+		Vector<String> names = new Vector<String>();
+		for (Rank r : arg0) {
+			names.addElement(r.getName());
+		}
+		return names;
+	}
+	
 	
 	/**
 	 * Extracts the names out of the given set of guilds and returns it as a set of strings.
