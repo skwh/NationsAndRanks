@@ -42,14 +42,6 @@ public class Core extends JavaPlugin {
 		return version;
 	}
 	
-	private boolean verbose = true;
-	
-	public boolean getVerbosity() {
-		return verbose;
-	}
-	public void setVerbosity(boolean b) {
-		verbose = b;
-	}
 	protected String defaultWorldName;
 	protected HashMap<String,User> UserList = new HashMap<String,User>();
 	protected Set<Nation> NationList = new HashSet<Nation>();
