@@ -6,6 +6,7 @@ import java.util.Vector;
 import net.skwh.NationsAndRanks.Core;
 import net.skwh.NationsAndRanks.BaseTemplates.Guild;
 import net.skwh.NationsAndRanks.BaseTemplates.Nation;
+import net.skwh.NationsAndRanks.BaseTemplates.Rank;
 import net.skwh.NationsAndRanks.BaseTemplates.User;
 import net.skwh.NationsAndRanks.Utilites.JamesBond;
 
@@ -64,20 +65,15 @@ public class CommandsExecutor extends Core {
 					boolean nationExists = baseCore.getNation_NameList().containsKey(args[0]);
 					if (nationExists) {
 						Nation n = getBaseCore().getNation_NameList().get(args[0]);
-						boolean failure = false;
 						try {
 							n.addCitizen(usahName);
 							getBaseCore().getUserList().get(usahName).setNation(true, n);
 						} catch (Exception e) {
-							failure = true;
 							getBaseCore().log("Error adding player to nation: " + e.getMessage());
-						} finally {
-							if (failure) {
-								displayMessageToPlayer(playah, ChatColor.RED + "Sorry, there was a problem adding you to " + args[0] + ".");
-							} else {
-								displayMessageToPlayer(playah, ChatColor.GREEN + "Welcome to " + args[0] + ", " + usahName);
-							}
+							displayMessageToPlayer(playah, ChatColor.RED + "Sorry, there was a problem adding you to " + args[0] + ".");
+							return true;
 						}
+						displayMessageToPlayer(playah, ChatColor.GREEN + "Welcome to " + args[0] + ", " + usahName);
 					} else {
 						displayMessageToPlayer(playah, "That nation does not exist!");
 					}
@@ -90,22 +86,17 @@ public class CommandsExecutor extends Core {
 				if (JamesBond.doesPlayerBelongToCountry(usahName)) {
 					if (!JamesBond.doesPlayerBelongToGuild(usahName)) {
 						if (JamesBond.getGuilds().containsKey(args[0])) {
-							boolean failed = false;
 							Guild g = JamesBond.getGuilds().get(args[0]);
 							try {
 								g.addMemberWithRank(usahName,g.getRanksInOrder().elementAt(0));
 								getBaseCore().getUserList().get(usahName).setGuild(true, g);
 							} catch (Exception e) {
-								failed = true;
 								e.printStackTrace();
-							} finally {
-								if (failed) {
-									displayMessageToPlayer(playah, ChatColor.RED + "Sorry, there was a problem adding you to " + args[0] + ".");
-								} else {
-									displayMessageToPlayer(playah, ChatColor.GREEN + "Welcome to " + args[0] + ", " + usahName);
-									JamesBond.getNationForPlayer(usahName).refreshCitizens();
-								}
+								displayMessageToPlayer(playah, ChatColor.RED + "Sorry, there was a problem adding you to " + args[0] + ".");
+								return true;
 							}
+							displayMessageToPlayer(playah, ChatColor.GREEN + "Welcome to " + args[0] + ", " + usahName);
+							JamesBond.getNationForPlayer(usahName).refreshCitizens();
 						} else {
 							displayMessageToPlayer(playah, "No guild with that name exists!");
 						}
@@ -152,6 +143,30 @@ public class CommandsExecutor extends Core {
 						e.printStackTrace();
 						displayMessageToPlayer(playah, ChatColor.RED + "Sorry, there was an error.");
 					}
+				}
+			}
+		}
+		if (args.length == 2) {
+			if (cmd.getName().equalsIgnoreCase("setRank") || cmd.getName().equalsIgnoreCase("sr")) {
+				Player p = getBaseCore().getServer().getPlayer(args[0]);
+				if (p != null) {
+					User u = getBaseCore().getUserList().get(p.getName());
+					if (JamesBond.doesRankExistInGuild(args[1], u.getGuild())) {
+						try {
+							Rank r = JamesBond.getRankInGuild(args[1], u.getGuild());
+							u.getGuild().setPlayerToRank(p.getName(), r);
+							u.getNation().refreshCitizens();
+						} catch (Exception e) {
+							e.printStackTrace();
+							displayMessageToPlayer(playah, "There was a problem setting the player to that rank.");
+							return true;
+						}
+						displayMessageToPlayer(p, "Your rank has been set to " + args[1]);
+					} else {
+						displayMessageToPlayer(playah, "That rank does not exist in the player's guild!");
+					}
+				} else {
+					displayMessageToPlayer(playah, "That player does not exist!");
 				}
 			}
 		}
