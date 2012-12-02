@@ -22,21 +22,14 @@ public class PlayerJoinListener extends Core implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		String s = p.getName();
-		getBaseCore().log("Player " + p.getName() + " joined!");
-		getBaseCore().log("Has the player played before? " + p.hasPlayedBefore());
-		getBaseCore().log("Does the player belong to a country? " + JamesBond.doesPlayerBelongToCountry(s));
 		if (JamesBond.doesPlayerBelongToCountry(s)) {
 			Nation n = JamesBond.getNationForPlayer(s);
 			n.refreshCitizens();
 		}
-		getBaseCore().log("Is the player in the user list? " + JamesBond.isPlayerInUserList(s));
 		if (!JamesBond.isPlayerInUserList(s)) {
 			User u = new User(p);
 			getBaseCore().getUserList().put(s, u);
-			getBaseCore().log("A new user was added to the userlist, " + p.getName());
 		}
-		
-		getBaseCore().log("Does the player belong to a guild? " + JamesBond.doesPlayerBelongToGuild(s));
 		if (JamesBond.doesPlayerBelongToGuild(s)) {
 			boolean failed = false;
 			Set<ItemStack> i = new HashSet<ItemStack>();
@@ -50,7 +43,9 @@ public class PlayerJoinListener extends Core implements Listener {
 			} finally {
 				if (!failed) {
 					for (ItemStack jk : i) {
-						p.getInventory().addItem(jk);
+						if (!p.getInventory().contains(jk)) {
+							p.getInventory().addItem(jk);
+						}
 					}
 				}
 			}
