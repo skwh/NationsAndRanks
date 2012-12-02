@@ -36,7 +36,9 @@ public class PlayerRespawnListener extends Core implements Listener {
 			}
 			if (!failed) {
 				for (ItemStack i1 : kit) {
-					pl.getInventory().addItem(i1);
+					if (!pl.getInventory().contains(i1)) {
+						pl.getInventory().addItem(i1);
+					}
 				}
 			}
 			
