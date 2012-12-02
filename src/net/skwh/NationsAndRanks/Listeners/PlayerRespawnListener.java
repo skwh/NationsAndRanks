@@ -23,8 +23,6 @@ public class PlayerRespawnListener extends Core implements Listener {
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
 		Player pl = e.getPlayer();
 		String s = pl.getName();
-		getBaseCore().log("Player " + pl.getName() + " respawned!");
-		getBaseCore().log("Does the player belong to a guild? " + JamesBond.doesPlayerBelongToGuild(s));
 		if (JamesBond.doesPlayerBelongToGuild(s)) {
 			Set<ItemStack> kit = new HashSet<ItemStack>();
 			boolean failed = false;
@@ -36,7 +34,7 @@ public class PlayerRespawnListener extends Core implements Listener {
 			}
 			if (!failed) {
 				for (ItemStack i1 : kit) {
-					if (!pl.getInventory().contains(i1)) {
+					if (!pl.getInventory().contains(i1) && !JamesBond.itemIsInArmorInventory(pl.getInventory(), i1)) {
 						pl.getInventory().addItem(i1);
 					}
 				}
@@ -46,7 +44,6 @@ public class PlayerRespawnListener extends Core implements Listener {
 				World playerWorld = pl.getWorld();
 				pbRespawn = playerWorld.getSpawnLocation();
 			}
-			getBaseCore().log("What is the player's respawn point? x:" + pbRespawn.getX() + " y:" + pbRespawn.getY() + " z:" + pbRespawn.getZ());
 			Guild g = JamesBond.getGuildForPlayer(s);
 			Location gSP = g.getSpawnPoint();
 			if (pbRespawn != gSP) {
