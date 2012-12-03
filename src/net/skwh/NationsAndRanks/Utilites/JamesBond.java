@@ -23,8 +23,56 @@ import net.skwh.NationsAndRanks.BaseTemplates.User;
  */
 public class JamesBond extends Core {
 	/**
+	 * Sets a player to the given rank in both the user object and the guild object, creating fewer errors.
+	 * @param s {@link String} Username
+	 * @param r {@link Rank}
+	 * @return {@link Boolean} if the operation completed successfully.
+	 */
+	public static boolean globalSetPlayerToRank(String s, Rank r) {
+		if (doesPlayerBelongToGuild(s)) {
+			if (isPlayerInUserList(s)) {
+				User u = getBaseCore().getUserList().get(s);
+				u.setCurrentRankGuild(r);
+				u.getNation().refreshCitizens();
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
+	 * Sets a player to the given guild and sets their rank to the lowest rank avaliable, creating fewer errors.
+	 * @param s {@link String} Username
+	 * @param g {@link Guild}
+	 * @return {@link Boolean} if the operation completed successfully.
+	 */
+	public static boolean globalSetPlayerInGuild(String s, Guild g) {
+		if (doesPlayerBelongToCountry(s)) {
+			if (isPlayerInUserList(s)) {
+				User u = getBaseCore().getUserList().get(s);
+				u.setGuild(true, g);
+				globalSetPlayerToRank(s, g.getRanksInOrder().firstElement());
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
+	 * Sets a player as a member of the given nation.
+	 * @param s {@link String} Username
+	 * @param n {@link Nation}
+	 * @return {@link Boolean} if the operation completed successfully.
+	 */
+	public static boolean globalSetPlayerInNation(String s, Nation n) {
+		if (isPlayerInUserList(s)) {
+			User u = getBaseCore().getUserList().get(s);
+			u.setNation(true, n);
+			return true;
+		}
+		return false;
+	}
+	/**
 	 * Returns whether or not the given player belongs to a nation.
-	 * @param p {@link Player}
+	 * @param s {@link String} Username
 	 * @return {@link Boolean}
 	 */
 	public static boolean doesPlayerBelongToCountry(String s) {
