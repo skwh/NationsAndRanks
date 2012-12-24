@@ -1,5 +1,7 @@
 package net.skwh.NationsAndRanks.BaseTemplates;
 
+import java.util.Vector;
+
 import net.skwh.NationsAndRanks.Core;
 import org.bukkit.entity.Player;
 /**
@@ -154,6 +156,36 @@ public class User {
 	 */
 	public String getUserName() {
 		return pl;
+	}
+	
+	/**
+	 * Sets the user's rank to the next highest in the list.
+	 */
+	public void RankUp() {
+		Vector<Rank> ranksInOrder = ownerGuild.getRanksInOrder();
+		for (Rank r : ranksInOrder) {
+			ownerNation.getCore().log("Rank " + r.getName() + " Up: " + r.getUp().getName() + " Down: " + r.getDown().getName());
+			if (r == currentRank) {
+				if (r.getUp() != null) {
+					currentRank = r.getUp();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Sets the user's rank to the next lowest in the list.
+	 */
+	public void RankDown() {
+		Vector<Rank> ranksInOrder = ownerGuild.getRanksInOrder();
+		for (Rank r : ranksInOrder) {
+			ownerNation.getCore().log("Rank " + r.getName());
+			if (r == currentRank) {
+				if (r.getDown() != null) {
+					currentRank = r.getDown();
+				}
+			}
+		}
 	}
 	
 	/**
