@@ -52,7 +52,7 @@ public class Settings extends ConfigLoader {
 	/**
 	 * Loads the nations, guilds, ranks and settings from the config.yml file.
 	 */
-	protected void loadKeys() { //TODO: Test the FRICKING FOR LOOPS
+	protected void loadKeys() {
 		worldName = config.getString("World_name");
 		basePlugin.setWorldName(worldName);
 		
@@ -61,6 +61,8 @@ public class Settings extends ConfigLoader {
 			NationList.add(new Nation(st,basePlugin));
 		}
 		for (Nation n : NationList) {
+			String color = config.getString(n.getName() + ".Color");
+			n.setColor(JamesBond.interpretColor(color));
 			List<String> l2 = (List<String>) config.getList(n.getName() + ".Guilds");
 			for (String st : l2) {
 				Guild currentGuild = new Guild(st,n);
@@ -79,11 +81,8 @@ public class Settings extends ConfigLoader {
 				try {
 					RankList.add(currentRank);
 					g.addRank(currentRank);
-					if (g.getRanksInOrder().size() == 1) {
-						g.addToRanksInOrder(currentRank);
-					} else {
-						g.addToRanksInOrderWithUpDown(currentRank);
-					}
+					g.addToRanksInOrderWithUpDown(currentRank);
+					basePlugin.log(JamesBond.displayRankHierarchy(g.getRanksInOrder()));
 				} catch (Exception e) {
 					basePlugin.log("There was an error adding rank " + currentRank.getName() + " to guild " + g.getName() + ":" + e.getMessage());
 				}
