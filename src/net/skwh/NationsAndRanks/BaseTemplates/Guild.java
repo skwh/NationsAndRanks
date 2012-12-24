@@ -103,14 +103,12 @@ public class Guild {
 	 * Gets the rank of a given player.
 	 * @param s {@link String} Username
 	 * @return {@link Rank}
-	 * @throws Exception
 	 */
-	public Rank getRankForPlayer(String s) throws Exception { //TODO: ERROR
+	public Rank getRankForPlayer(String s) { 
 		if (playerRankList.containsKey(s)) {
 			return playerRankList.get(s);
-		} else {
-			throw new Exception("The specified player is not in the ranklist.");
 		}
+		return null;
 	}
 	
 	/**
@@ -214,23 +212,27 @@ public class Guild {
 	 * @param r {@link Rank}
 	 */
 	public void addToRanksInOrderWithUpDown(Rank r) {
-		ranksInOrder.addElement(r);
-		if (ranksInOrder.size() != 1) {
-			Rank ru, rd;
-			try {
-				ru = ranksInOrder.elementAt(ranksInOrder.indexOf(r)+1);
-			} catch (ArrayIndexOutOfBoundsException e) {
-				ru = r;
+		if (ranksInOrder.isEmpty()) {
+			ranksInOrder.add(r);
+			r.setDown(r);
+			r.setUp(r);
+		} else {
+			ranksInOrder.add(r);
+			for (Rank ra : ranksInOrder) {
+				if (ra == r) {
+					if (ranksInOrder.elementAt(0)==ra) {
+						ra.setDown(ra);
+						ra.setUp(ranksInOrder.elementAt(1));
+					} else if (ranksInOrder.elementAt(ranksInOrder.size())==ra) {
+						ra.setUp(ra);
+						ra.setDown(ranksInOrder.elementAt(ranksInOrder.size()-1));
+					} else {
+						int index = ranksInOrder.indexOf(ra);
+						ra.setUp(ranksInOrder.elementAt(index+1));
+						ra.setDown(ranksInOrder.elementAt(index-1));
+					}
+				}
 			}
-			try {
-				rd = ranksInOrder.elementAt(ranksInOrder.indexOf(r)-1);
-			} catch (ArrayIndexOutOfBoundsException e) {
-				rd = r;
-			}
-			r.setUp(ru);
-			r.setDown(rd);
-			ru.setDown(r);
-			rd.setUp(r);
 		}
 	}
 	
