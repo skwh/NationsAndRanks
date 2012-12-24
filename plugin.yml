@@ -40,6 +40,14 @@ commands:
     permission: NationsAndRanks.GetRank
     usage: "Usage: /<command>"
     permission-message: You do not have access to this command!
+  RankUp:
+    description: ranks the player up. for testing.
+    aliases: [ru]
+    permission: NationsAndRanks.RankUp
+  RankDown:
+    description: ranks the player down. for testing.
+    aliases: [rd]
+    permission: NationsAndRanks.RankDown
 permissions:
   NationsAndRanks.*:
     description: Gives access to all Nations and Ranks commands.
@@ -52,6 +60,8 @@ permissions:
       NationsAndRanks.List: true
       NationsAndRanks.SetGuildSpawn: true
       NationsAndRanks.GetRank: true
+      NationsAndRanks.RankUp: true
+      NationsAndRanks.RankDown: true
   NationsAndRanks.Info:
     description: Gives access to the nar command.
     default: true
@@ -72,4 +82,10 @@ permissions:
     default: op
   NationsAndRanks.GetRank:
     description: Gives access to the GetRank command.
+    default: true
+  NationsAndRanks.RankUp:
+    description: Gives access to the RankUp command.
+    default: true
+  NationsAndRanks.RankDown:
+    description: Gives access to the RankDown command.
     default: true
