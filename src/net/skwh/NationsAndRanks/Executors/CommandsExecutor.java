@@ -53,6 +53,39 @@ public class CommandsExecutor extends Core {
 					displayMessageToPlayer(playah, "You do not belong to a nation yet!");
 				}
 			}
+			//temporary cmd
+			if (cmd.getName().equalsIgnoreCase("rankup")) {
+				User u = JamesBond.getUserForPlayer(usahName);
+				if (u != null) {
+					if (u.doesBelongToGuild()) {
+						getBaseCore().log("ranking up " + usahName);
+						u.RankUp();
+					} else {
+						sender.sendMessage(ChatColor.RED + "You must belong to a guild to rank up!");
+					}
+				}
+			}
+			if (cmd.getName().equalsIgnoreCase("rankdown")) {
+				User u = JamesBond.getUserForPlayer(usahName);
+				if (u !=null) {
+					if (u.doesBelongToGuild()) {
+						getBaseCore().log("ranking down " + usahName);
+						u.RankDown();
+					} else {
+						sender.sendMessage(ChatColor.RED + "You must belong to a guild to rank down!");
+					}
+				}
+			}
+		}
+		if (args.length == 1) {
+			if (cmd.getName().equalsIgnoreCase("getInfo") && !(sender instanceof Player)) {
+				Player p = getServer().getPlayer(args[0]);
+				if (p!=null) {
+					String[] info = JamesBond.getInformation(p);
+				} else {
+					sender.sendMessage("That player does not exist!");
+				}
+			}
 		}
 		if (!(sender instanceof Player)) {
 			sender.sendMessage(ChatColor.RED + "You must be a player to use this command!");
@@ -131,6 +164,8 @@ public class CommandsExecutor extends Core {
 					} else {
 						displayMessageToPlayer(playah, ChatColor.RED + "You must belong to a guild to get the list of ranks!");
 					}
+				} else {
+					displayMessageToPlayer(playah, ChatColor.RED + "Cannot list " + args[0]);
 				}
 			}
 			// set guild spawn
