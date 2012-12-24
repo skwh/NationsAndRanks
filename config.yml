@@ -1,6 +1,7 @@
 World_name: "world"
 Nations: [Dwarf,Human]
 Dwarf:
+  Color: Aqua
   Guilds: [Miner,Warrior]
   Miner:
     Ranks: [Junior Miner,Senior Miner,Master Miner]
@@ -31,6 +32,7 @@ Dwarf:
       Items: [276,320,310,311]
       Color: dark red
 Human:
+  Color: Green
   Guilds: [Miner,Warrior]
   Miner:
     Ranks: [Junior Miner,Senior Miner,Master Miner]
