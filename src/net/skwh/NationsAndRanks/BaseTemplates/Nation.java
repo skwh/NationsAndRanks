@@ -41,40 +41,12 @@ public class Nation {
 	private ChatColor uniqueColor;
 	
 	/**
-	 * Sets the uniqueColor. Used by {@link CommandsExecutor#onCommand()}.
-	 * @param s -String: The new color to be assigned.
-	 * @throws Exception
+	 * Sets the uniqueColor.
+	 * @param c -ChatColor: The new color to be assigned.
 	 */
-	public void setColor(String s) throws Exception {
-		boolean oops = false;
-		switch (s) {
-			case "blue":
-				uniqueColor = ChatColor.BLUE;
-				break;
-			case "red":
-				uniqueColor = ChatColor.RED;
-				break;
-			case "green":
-				uniqueColor = ChatColor.GREEN;
-				break;
-			case "yellow":
-				uniqueColor = ChatColor.YELLOW;
-				break;
-			case "grey":
-				uniqueColor = ChatColor.GRAY;
-				break;
-			case "gold":
-				uniqueColor = ChatColor.GOLD;
-				break;
-			default:
-				oops = true;
-				break;
-		}
-		if (oops) {
-			throw new Exception("No Matching Color Found");
-		} else {
-			this.refreshCitizens();
-		}
+	public void setColor(ChatColor c) {
+		this.uniqueColor = c;
+		refreshCitizens();
 	}
 	/**
 	 * The getter for this nation's chat color.
@@ -167,7 +139,7 @@ public class Nation {
 			try {
 				rankColor = u.getCurrentRank().getColor();
 			} catch (Exception e) {
-				rankColor = ChatColor.WHITE;
+				rankColor = ChatColor.GRAY;
 			}
 			p.setDisplayName(uniqueColor + "[" + getName() + "] " + rankColor + p.getName() + ChatColor.WHITE);
 		}
@@ -175,13 +147,25 @@ public class Nation {
 	
 	/**
 	 * Constructor, automatically sets the color to {@link ChatColor#DARK_BLUE}.
-	 * @param n {@link String}
+	 * @param n {@link String} Name
 	 * @param baseCore {@link Core}
 	 */
 	public Nation(String n, Core baseCore) {
 		this.baseCore = baseCore;
 		name = n;
 		uniqueColor = ChatColor.DARK_BLUE;
+	}
+	
+	/**
+	 * Constructor, requires a unique color to be passed.
+	 * @param n {@link String}
+	 * @param baseCore {@link Core}
+	 * @param color {@link ChatColor}
+	 */
+	public Nation(String n, Core baseCore, ChatColor color) {
+		this.baseCore = baseCore;
+		name = n;
+		uniqueColor = color;
 	}
 	
 }
