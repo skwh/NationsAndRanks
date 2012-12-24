@@ -212,7 +212,29 @@ public class JamesBond extends Core {
 		return names;
 	}
 	
-	
+	/**
+	 * Displays the {@link Guild#ranksInOrder} as a structured list.
+	 * @param arg0 {@link Vector}[{@link Rank}] ranks in order
+	 * @return {@link String} Hierarchy
+	 */
+	public static String displayRankHierarchy(Vector<Rank> arg0) {
+		String harcy = "";
+		for (Rank r : arg0) {
+			harcy += "~" + r.getName() + "\n";
+			try {
+				harcy += " +" + r.getUp().getName() + "\n";
+			} catch (NullPointerException e) {
+				harcy += " +NULL\n";
+			}
+			try {
+				harcy += " -" + r.getDown().getName() + "\n";
+			} catch (NullPointerException e) {
+				harcy += " -NULL\n";
+			}
+			harcy += "----\n";
+		}
+		return harcy;
+	}
 	/**
 	 * Extracts the names out of the given set of guilds and returns it as a set of strings.
 	 * @param arg0 {@link Set}&#60;{@link Guild}&#62;
@@ -241,13 +263,34 @@ public class JamesBond extends Core {
 	
 	/**
 	 * Returns whether or not the given player is in the User list ({@link Core#getUserList()}).
-	 * @param p {@link Player}
+	 * @param s {@link String} User name
 	 * @return {@link Boolean}
 	 */
 	public static boolean isPlayerInUserList(String s) {
 		return getBaseCore().getUserList().containsKey(s);
 	}
 	
+	/**
+	 * Returns the username of the player associated with the passed User.
+	 * @param u {@link User}
+	 * @return {link String} userName
+	 */
+	public static String getPlayerForUser(User u) {
+		return u.getUserName();
+	}
+	
+	/**
+	 * Returns the User associated with the given player's username.
+	 * @param s {@link String} userName
+	 * @return {@link User}
+	 */
+	public static User getUserForPlayer(String s) {
+		if (isPlayerInUserList(s)) {
+			return getBaseCore().getUserList().get(s);
+		} else {
+			return null;
+		}
+	}
 	/**
 	 * Returns whether or not the given user is in the User list ({@link Core#getUserList()}).
 	 * @param u {@link User}
@@ -318,6 +361,38 @@ public class JamesBond extends Core {
 			}
 		}
 		return false;
+	}
+	/**
+	 * Returns information about the given Player.
+	 * @param p {@link Player}
+	 * @return String[]
+	 */
+	public static String[] getInformation(Player p) {
+		boolean isPlayerCM = doesPlayerBelongToCountry(p.getName());
+		boolean isPlayerGM = doesPlayerBelongToGuild(p.getName());
+		boolean doesUserExist = getBaseCore().getUserList().containsKey(p.getName());
+		String countryName, guildName, rankName, userName;
+		if (isPlayerCM) {
+			countryName = getNationForPlayer(p.getName()).getName();
+			if (isPlayerGM) {
+				guildName = getGuildForPlayer(p.getName()).getName();
+				rankName = getGuildForPlayer(p.getName()).getRankForPlayer(p.getName()).getName();
+			}
+		}
+		
+		
+		String[] info = {Boolean.toString(isPlayerCM),Boolean.toString(isPlayerGM),Boolean.toString(doesUserExist)};
+		return info;
+	}
+	
+	/**
+	 * Returns information about the given Player by interpreting their username.
+	 * @param s {@link String} Username
+	 * @return String[]
+	 */
+	public static String[] getInformation(String s) {
+		String[] info = {};
+		return info;
 	}
 	/**
 	 * Reads strings and attempts to extract the corresponding {@link ChatColor} out of them. 
